@@ -1,26 +1,82 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NeuroCoin</title>
   <style>
     body {
-      font-family: sans-serif;
       margin: 0;
-      padding: 20px;
-      background-color: var(--tg-theme-bg-color, #ffffff);
-      color: var(--tg-theme-text-color, #000000);
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
     h1 {
-      font-size: 24px;
+      margin-bottom: 10px;
     }
-    p {
-      font-size: 18px;
+    #coin {
+      width: 150px;
+      height: 150px;
+      background-image: url("https://i.imgur.com/o8eYHqD.png"); /* можешь заменить на свою монетку */
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    #coin:active {
+      transform: scale(0.95);
+    }
+    #counter {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    #send {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #00bcd4;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <h1>Добро пожаловать в NeuroCoin!</h1>
-  <p>Этот сайт развёрнут на Vercel и подключён к Telegram.</p>
+  <div id="coin"></div>
+  <div id="counter">Монет: 0</div>
+  <button id="send">Отправить боту</button>
+
+  <script>
+    let count = 0;
+    const coin = document.getElementById('coin');
+    const counter = document.getElementById('counter');
+    const sendBtn = document.getElementById('send');
+
+    coin.addEventListener('click', () => {
+      count++;
+      counter.innerText = `Монет: ${count}`;
+    });
+
+    sendBtn.addEventListener('click', () => {
+      if (window.Telegram.WebApp) {
+        window.Telegram.WebApp.sendData(JSON.stringify({ coins: count }));
+        window.Telegram.WebApp.close();
+      } else {
+        alert("Telegram WebApp не инициализирован");
+      }
+    });
+
+    // Telegram WebApp initialization
+    if (window.Telegram.WebApp) {
+      Telegram.WebApp.expand();
+    }
+  </script>
 </body>
 </html>
