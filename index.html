@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NeuroCoin</title>
+  <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
@@ -14,31 +15,32 @@
       color: #e0f7fa;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      justify-content: space-between;
+      min-height: 100vh;
       text-align: center;
+      position: relative;
     }
 
     h1 {
-      margin-bottom: 20px;
-      font-size: 28px;
+      margin-top: 30px;
+      font-size: 22px;
       text-shadow: 0 0 8px #00bcd4;
     }
 
     #coin {
       width: 150px;
       height: 150px;
-      background-image: url("https://i.imgur.com/jRgD9Iq.png"); /* синяя монета, можно заменить */
+      margin: 20px auto;
+      background-image: url("https://i.imgur.com/ZleN6rI.png");
       background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
       cursor: pointer;
-      margin: 20px auto;
       animation: pulse 2s infinite ease-in-out;
       box-shadow: 0 0 20px #00bcd4;
       border-radius: 50%;
       transition: transform 0.15s ease;
+      position: relative;
     }
 
     #coin:active {
@@ -51,16 +53,32 @@
       100% { box-shadow: 0 0 10px #00bcd4; }
     }
 
-    #counter {
+    .flash {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       font-size: 24px;
+      color: #00eaff;
+      transform: translate(-50%, -50%);
+      animation: pop 0.5s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes pop {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -70%) scale(1.5); }
+    }
+
+    #counter {
+      font-size: 22px;
       margin-top: 10px;
       text-shadow: 0 0 5px #00bcd4;
     }
 
-    #send {
-      margin-top: 30px;
+    #send, #connect-wallet {
+      margin: 15px auto 0;
       padding: 12px 30px;
-      font-size: 16px;
+      font-size: 15px;
       border: none;
       border-radius: 12px;
       background: linear-gradient(90deg, #00bcd4, #2196f3);
@@ -68,29 +86,152 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
       transition: all 0.3s ease;
+      display: block;
     }
 
-    #send:hover {
+    #send:hover, #connect-wallet:hover {
       transform: scale(1.05);
       box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
+    }
+
+    #wallet-address {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #00e5ff;
+    }
+
+    #level {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #00bcd4;
+      text-shadow: 0 0 4px #00bcd4;
+    }
+
+    #progress-bar {
+      width: 80%;
+      height: 16px;
+      background: #2a2a2a;
+      border-radius: 10px;
+      margin: 10px auto;
+      overflow: hidden;
+      box-shadow: inset 0 0 5px #000;
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00c9ff, #92fe9d);
+      transition: width 0.3s ease;
+    }
+
+    #level-up-message {
+      position: absolute;
+      top: 20%;
+      width: 100%;
+      font-size: 32px;
+      font-weight: bold;
+      color: #00c9ff;
+      text-shadow: 0 0 10px #00c9ff, 0 0 20px #00f0ff;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.5s, transform 0.5s;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    #level-up-message.show {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      background: #1c1c1c;
+      border-top: 1px solid #2e2e2e;
+    }
+
+    .tab {
+      color: #aaa;
+      font-size: 14px;
+      flex-grow: 1;
+    }
+
+    .tab.active {
+      color: #00bcd4;
+    }
+
+    .tab:hover {
+      color: #ffffff;
     }
   </style>
 </head>
 <body>
-  <h1>Добро пожаловать в NeuroCoin!</h1>
+  <h1 id="welcome">Добро пожаловать в NeuroCoin!</h1>
+
   <div id="coin"></div>
   <div id="counter">Монет: 0</div>
+  <div id="level">Уровень: 1</div>
+  <div id="progress-bar"><div id="progress-fill"></div></div>
+  <div id="level-up-message">🔥 Новый уровень!</div>
+
   <button id="send">Отправить боту</button>
+  <button id="connect-wallet">Привязать Tonkeeper</button>
+  <div id="wallet-address"></div>
+
+  <div class="tabs">
+    <div class="tab active">Home</div>
+    <div class="tab">Friends</div>
+    <div class="tab">Earn</div>
+    <div class="tab">Burn</div>
+    <div class="tab">Wallet</div>
+  </div>
 
   <script>
-    let count = 0;
+    let count = parseInt(localStorage.getItem("coinCount")) || 0;
+    let previousLevel = Math.floor(count / 50000) + 1;
+
     const coin = document.getElementById('coin');
     const counter = document.getElementById('counter');
     const sendBtn = document.getElementById('send');
+    const levelText = document.getElementById('level');
+    const progressFill = document.getElementById('progress-fill');
+    const levelUpMessage = document.getElementById('level-up-message');
+    const welcome = document.getElementById('welcome');
+    const walletAddressDiv = document.getElementById('wallet-address');
+    const connectWalletBtn = document.getElementById('connect-wallet');
+
+    function updateCounter() {
+      counter.innerText = `Монет: ${count}`;
+      localStorage.setItem("coinCount", count);
+    }
+
+    function updateProgress() {
+      const level = Math.floor(count / 50000) + 1;
+      const progress = count % 50000;
+      const percent = (progress / 50000) * 100;
+
+      levelText.innerText = `Уровень: ${level}`;
+      progressFill.style.width = `${percent}%`;
+
+      if (level > previousLevel) {
+        levelUpMessage.classList.add('show');
+        setTimeout(() => levelUpMessage.classList.remove('show'), 2000);
+        previousLevel = level;
+      }
+    }
 
     coin.addEventListener('click', () => {
       count++;
-      counter.innerText = `Монет: ${count}`;
+      updateCounter();
+      updateProgress();
+
+      const flash = document.createElement('div');
+      flash.classList.add('flash');
+      flash.textContent = '+1';
+      coin.appendChild(flash);
+      setTimeout(() => flash.remove(), 500);
     });
 
     sendBtn.addEventListener('click', () => {
@@ -102,10 +243,35 @@
       }
     });
 
-    // Telegram WebApp initialization
     if (window.Telegram.WebApp) {
+      Telegram.WebApp.ready();
       Telegram.WebApp.expand();
+
+      const user = Telegram.WebApp.initDataUnsafe?.user;
+      if (user?.first_name) {
+        welcome.innerText = `Привет, ${user.first_name}!`;
+      }
     }
+
+    // === TonConnect ===
+    const tonConnect = new TonConnect({
+      manifestUrl: 'https://yourdomain.com/tonconnect-manifest.json' // ЗАМЕНИ НА СВОЙ URL!
+    });
+
+    connectWalletBtn.addEventListener('click', async () => {
+      try {
+        await tonConnect.connectWallet();
+        const wallet = tonConnect.wallet;
+        if (wallet?.account?.address) {
+          walletAddressDiv.innerText = `Кошелёк: ${wallet.account.address}`;
+        }
+      } catch (e) {
+        alert("Ошибка подключения кошелька");
+      }
+    });
+
+    updateCounter();
+    updateProgress();
   </script>
 </body>
 </html>
