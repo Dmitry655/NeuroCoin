@@ -1,160 +1,168 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeuroXTon Game</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #0b0c10; color: #ffffff; }
-    header { background: #1f2833; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 100; }
-    nav a { margin: 0 1rem; color: #66fcf1; text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
-    section { padding: 2rem; display: none; }
-    section.active { display: block; }
-    button { padding: 0.5rem 1rem; margin-top: 1rem; cursor: pointer; }
-    .leaderboard, .token-balance { margin-top: 2rem; }
-    ul { line-height: 1.6; }
+    :root {
+      --primary: #66fcf1;
+      --background: #0b0c10;
+      --foreground: #1f2833;
+      --text: #ffffff;
+      --accent: #45a29e;
+      --highlight: #c5c6c7;
+    }body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+header {
+  background: var(--foreground);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-bottom: 2px solid var(--accent);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+nav a {
+  color: var(--primary);
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--highlight);
+}
+
+section {
+  padding: 2rem;
+  display: none;
+  max-width: 800px;
+  margin: auto;
+}
+
+section.active {
+  display: block;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  background: var(--primary);
+  border: none;
+  border-radius: 8px;
+  color: var(--background);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: var(--accent);
+}
+
+.leaderboard, .token-balance {
+  margin-top: 1.5rem;
+  background: var(--foreground);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.token-balance span {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+ol {
+  padding-left: 1.5rem;
+}
+
+ul, ol {
+  line-height: 1.6;
+}
+
+p {
+  line-height: 1.8;
+}
+
+.tagline {
+  margin-top: 1rem;
+  font-style: italic;
+  color: var(--highlight);
+}
+
   </style>
 </head>
 <body>
   <header>
     <h1>NeuroXTon</h1>
+    <div class="tagline">Token. AI. Game. Community.</div>
     <nav>
       <a href="#game" onclick="showTab('game')">Игра</a>
-      <a href="#wallet" onclick="showTab('wallet')">Wallet</a>
+      <a href="#wallet" onclick="showTab('wallet')">Кошелёк</a>
       <a href="#about" onclick="showTab('about')">О нас</a>
       <a href="#roadmap" onclick="showTab('roadmap')">Дорожная карта</a>
       <a href="#mechanics" onclick="showTab('mechanics')">Механики</a>
       <a href="#future" onclick="showTab('future')">Будущее</a>
     </nav>
-  </header>
-
-  <section id="game" class="active">
+  </header>  <section id="game" class="active">
     <h2>Кликер</h2>
+    <p>Нажимай, чтобы накапливать токены NXT и соревноваться с другими игроками!</p>
     <button onclick="incrementScore()">Кликни меня!</button>
     <div class="token-balance">Ваши токены: <span id="tokenBalance">0</span></div>
     <div class="leaderboard">
       <h3>Лидерборд</h3>
       <ol id="leaderboardList"></ol>
     </div>
-  </section>
-
-  <section id="wallet">
-    <h2>Lockdrop и AI-стейкинг</h2>
-    <p>
-      🔒 <strong>Локап = OG-бонусы</strong><br>
-      Лочь NXT на 30/60/90 дней и получи:<br>
-      🎁 эксклюзивные дропы<br>
-      🚀 ускорители в игре<br>
-      🏆 OG-статус и роль<br>
-      📈 приоритет в будущих распределениях<br><br>
-
-      🌱 <strong>AI-оптимизированный стейкинг</strong><br>
-      — Персональные условия, рассчитанные Grok'ом<br>
-      — Учет активности в игре и участия в комьюнити<br>
-      — Динамические награды на основе ончейн-поведения<br><br>
-
-      🎁 <strong>AI-дропы за реальную активность</strong><br>
-      ✅ Играешь — получаешь<br>
-      ✅ Рассказываешь — усиливаешь<br>
-      ✅ Участвуешь в жизни проекта — зарабатываешь
-    </p>
-  </section>
-
-  <section id="about">
+  </section>  <section id="wallet">
+    <h2>Подключение к Tonkeeper</h2>
+    <p>В будущем вы сможете подключить Tonkeeper для хранения и перевода токенов NXT.</p>
+    <button onclick="connectWallet()">Подключиться</button>
+  </section>  <section id="about">
     <h2>О нас</h2>
-    <p>
-      Привет, холдеры и участники движения NeuroXTon!<br><br>
-      Мы стоим в начале большого пути.<br>
-      <strong>NXT — это не просто токен. Это идея. Это комьюнити. Это технология.</strong><br><br>
-      🧠 Внутри нашей Web3-игры уже работает интеграция с Grok AI — искусственным интеллектом от Илона Маска.<br>
-      Это не просто фича. Это сердце экосистемы:
-    </p>
-    <ul>
-      <li>🎮 AI-генерация квестов и событий</li>
-      <li>🤖 Умный напарник и советник в реальном времени</li>
-      <li>📊 Адаптивная сложность под стиль игрока</li>
-      <li>🛡 AI-анти-чит и модерация</li>
-      <li>💬 Диалог с Grok прямо в игре</li>
-      <li>📈 В будущем — AI-ассистент по трейдингу</li>
-    </ul>
-  </section>
-
-  <section id="roadmap">
+    <p>NeuroXTon — это Web3-игра и токен, вдохновлённые Grok AI и построенные на блокчейне TON.<br>
+    Мы создаём уникальный опыт с AI-наградами, адаптивной сложностью и игровыми возможностями для каждого.</p>
+    <p>Grok AI будет ключевым элементом нашей игровой платформы. Пока API недоступен, мы строим механику вокруг будущей интеграции.</p>
+  </section>  <section id="roadmap">
     <h2>Дорожная карта</h2>
-
-    <h3>🔹 $100K+ — Старт</h3>
     <ul>
-      <li>🚀 Запуск игры с Grok AI</li>
-      <li>🎁 Первый AI-дроп</li>
-      <li>📊 Публичный дешборд</li>
-      <li>🎮 Тест-квесты и награды</li>
+      <li><strong>$100K</strong> — Запуск AI-игры, дешборд, дроп</li>
+      <li><strong>$250K</strong> — Lockdrop, стейкинг, PvE, дропы</li>
+      <li><strong>$500K</strong> — AI-миссии, маркетплейс, аналитика</li>
+      <li><strong>$750K</strong> — Кампания, DAO, NFT, DeFi</li>
+      <li><strong>$1M+</strong> — Метавселенная, PvP, Grok AI, CEX</li>
     </ul>
-
-    <h3>🔹 $250K+ — Активация</h3>
+  </section>  <section id="mechanics">
+    <h2>Игровые и AI-Механики</h2>
     <ul>
-      <li>🔒 Lockdrop с OG-наградами</li>
-      <li>🌱 Альфа AI-стейкинга</li>
-      <li>⚔️ PvE-сражения с интеллектом</li>
-      <li>🪂 Комьюнити-дроп</li>
-      <li>🎥 Web3-инфлюенсеры</li>
+      <li>AI-квесты и события</li>
+      <li>Grok как напарник и помощник</li>
+      <li>Адаптивная сложность</li>
+      <li>AI-античит и модерация</li>
+      <li>Будущий трейдинг-ассистент</li>
     </ul>
-
-    <h3>🔹 $500K+ — Расширение</h3>
+  </section>  <section id="future">
+    <h2>Будущее проекта</h2>
+    <p>Мы готовим платформу, готовую к встраиванию Grok AI, как только это станет доступным. Цель — стать первой Web3-игрой с полноценной AI-интеграцией.</p>
     <ul>
-      <li>🧠 AI-сгенерированные миссии</li>
-      <li>🛍 Маркетплейс на TON</li>
-      <li>📈 AI-ассистент по NXT</li>
-      <li>🎮 Умный стейкинг с геймификацией</li>
-      <li>🌍 Интернациональные сообщества</li>
-    </ul>
-
-    <h3>🔹 $750K+ — Ускорение</h3>
-    <ul>
-      <li>📜 AI-режим “Campaign”</li>
-      <li>🗳 DAO-голосования</li>
-      <li>👤 Прокачка AI-профилей</li>
-      <li>🏆 NFT-дропы</li>
-      <li>🏦 Интеграция с DeFi</li>
-    </ul>
-
-    <h3>🔹 $1M+ — Раскрытие потенциала</h3>
-    <ul>
-      <li>🌌 Метавселенная NeuroXTon</li>
-      <li>📲 Мобильное приложение</li>
-      <li>⚔️ PvP-арены с Grok AI</li>
-      <li>🔄 AI-контракты для трейдинга</li>
+      <li>📈 Готовность к Grok API</li>
+      <li>🌐 Мобильное приложение</li>
+      <li>🎮 PvP с AI</li>
       <li>🧬 Комьюнити-лаборатория</li>
     </ul>
-  </section>
-
-  <section id="mechanics">
-    <h2>AI-Механики</h2>
-    <ul>
-      <li>🎮 Кликер с AI-настройкой сложности через Grok</li>
-      <li>📊 Индивидуальные награды по поведению</li>
-      <li>🌱 Возможность стейкинга с баффами</li>
-      <li>🎁 Дропы за активность и холд</li>
-      <li>💬 Общение с Grok голосом/текстом</li>
-      <li>🛡 AI-античит и адаптивность</li>
-    </ul>
-  </section>
-
-  <section id="future">
-    <h2>Будущее и Листинг</h2>
-    <p>
-      Когда проект достигнет зрелости и достаточного MCap, мы планируем листинг на CEX.<br>
-      Мы не называем точную дату — это произойдёт <strong>не по графику, а по смыслу</strong>.<br><br>
-      🛸 И кое-что ещё…
-    </p>
-    <ul>
-      <li>🔥 Больше интеграций с Web3-проектами</li>
-      <li>🌍 Международные партнёрства</li>
-      <li>💎 Усиление утилиты токена NXT</li>
-    </ul>
-  </section>
-
-  <script>
+  </section>  <script>
     let tokenBalance = 0;
     let leaderboard = [];
 
@@ -181,10 +189,13 @@
       });
     }
 
+    function connectWallet() {
+      alert("В будущем здесь будет интеграция с Tonkeeper");
+    }
+
     function showTab(id) {
       document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
-  </script>
-</body>
+  </script></body>
 </html>
