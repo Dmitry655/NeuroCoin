@@ -2,216 +2,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeuroXTon App</title>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect.umd.min.js"></script>
+  <title>NeuroXTon Game</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0c0c0e;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem;
-    }
-    h1, h2, h3 {
-      color: #00ffff;
-    }
-    nav {
-      display: flex;
-      justify-content: space-around;
-      background-color: #1a1a1f;
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    nav button {
-      background: none;
-      border: none;
-      color: #00ffff;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    section {
-      display: none;
-      padding: 1.5rem 0;
-    }
-    section.active {
-      display: block;
-    }
-    .card {
-      background-color: #1a1a1f;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid #00ffff;
-      border-radius: 10px;
-    }
-    ul {
-      padding-left: 1.5rem;
-    }
-    p {
-      line-height: 1.6;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 3rem;
-      color: #777;
-      font-size: 0.9rem;
-    }
-    .wallet-connection {
-      text-align: center;
-      margin: 1.5rem 0;
-    }
-    #connect-wallet {
-      padding: 0.6rem 1.2rem;
-      background: #00ffff;
-      border: none;
-      color: #000;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #wallet-address {
-      margin-top: 0.5rem;
-      color: #aaa;
-    }
-    .clicker {
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .clicker button {
-      background: #00ffff;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1.5rem;
-      border-radius: 12px;
-      cursor: pointer;
-      color: #000;
-      font-weight: bold;
-    }
-    .clicker h2 {
-      margin-top: 1rem;
-    }
-    .balance {
-      text-align: center;
-      margin: 1rem 0;
-    }
-    .leaderboard {
-      margin-top: 2rem;
-    }
-    .leaderboard table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .leaderboard th, .leaderboard td {
-      border: 1px solid #333;
-      padding: 0.5rem;
-      text-align: center;
-    }
-    .leaderboard th {
-      background-color: #222;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background: #0b0c10; color: #ffffff; }
+    header { background: #1f2833; padding: 1rem; text-align: center; }
+    nav a { margin: 0 1rem; color: #66fcf1; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    section { padding: 2rem; display: none; }
+    section.active { display: block; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; cursor: pointer; }
+    .leaderboard, .token-balance { margin-top: 2rem; }
   </style>
 </head>
 <body>
-  <nav>
-    <button onclick="showSection('main')">Главная</button>
-    <button onclick="showSection('about')">О нас</button>
-    <button onclick="showSection('roadmap')">Дорожная карта</button>
-    <button onclick="showSection('mechanics')">Механики</button>
-    <button onclick="showSection('future')">Будущее</button>
-    <button onclick="showSection('wallet')">Wallet</button>
-  </nav>  <div class="container"><section id="main" class="active">
-  <h1>Игровой Кликер</h1>
-  <div class="balance">
-    Баланс токенов: <strong><span id="token-balance">0</span> NXT</strong>
-  </div>
-  <div class="clicker">
-    <button onclick="incrementCounter()">Кликни!</button>
-    <h2>Счёт: <span id="click-count">0</span></h2>
-  </div>
-  <div class="leaderboard">
-    <h2>Таблица лидеров</h2>
-    <table>
-      <thead>
-        <tr><th>Игрок</th><th>Счёт</th></tr>
-      </thead>
-      <tbody id="leaderboard-body">
-        <tr><td>Игрок1</td><td>120</td></tr>
-        <tr><td>Игрок2</td><td>95</td></tr>
-        <tr><td>Игрок3</td><td>74</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+  <header>
+    <h1>NeuroXTon</h1>
+    <nav>
+      <a href="#game" onclick="showTab('game')">Игра</a>
+      <a href="#wallet" onclick="showTab('wallet')">Wallet</a>
+      <a href="#about" onclick="showTab('about')">О нас</a>
+      <a href="#roadmap" onclick="showTab('roadmap')">Дорожная карта</a>
+      <a href="#mechanics" onclick="showTab('mechanics')">Механики</a>
+      <a href="#future" onclick="showTab('future')">Будущее</a>
+    </nav>
+  </header>  <section id="game" class="active">
+    <h2>Кликер</h2>
+    <button onclick="incrementScore()">Кликни меня!</button>
+    <div class="token-balance">Ваши токены: <span id="tokenBalance">0</span></div>
+    <div class="leaderboard">
+      <h3>Лидерборд</h3>
+      <ol id="leaderboardList"></ol>
+    </div>
+  </section>  <section id="wallet">
+    <h2>Подключение к Tonkeeper</h2>
+    <button onclick="connectWallet()">Подключиться</button>
+  </section>  <section id="about">
+    <h2>О нас</h2>
+    <p>
+      Привет, холдеры и участники нашего движения!<br>
+      Я рад приветствовать вас в самом начале пути NeuroXTon — токена, за которым стоит идея, сообщество и технология.<br><br>
+      🧠 Внутри нашей Web3-игры уже работает интеграция с Grok AI — продвинутым искусственным интеллектом от Илона Маска.<br>
+      🔥 NXT — это не мем и не копия. Это токен с целью.<br>
+      📌 Наша первая и ключевая цель — достичь $100,000 рыночной капитализации (MCap).<br>
+      Сегодня ты с нами в самом начале. Это не обещание “луны” — это старт реального пути, который мы пройдём вместе.<br>
+      Спасибо, что веришь. Спасибо, что держишь.<br>
+      Вперёд, NeuroXTon. Это только начало.
+    </p>
+  </section>  <section id="roadmap">
+    <h2>Дорожная карта</h2>
+    <ul>
+      <li><strong>$100K MCap</strong> — запуск полноценной игры</li>
+      <li><strong>$250K</strong> — награды, токеномика, первые дропы</li>
+      <li><strong>$500K</strong> — масштабирование, новые режимы, AI-механики</li>
+      <li><strong>$1M+</strong> — интеграция с CEX и мощный маркетинг</li>
+    </ul>
+  </section>  <section id="mechanics">
+    <h2>Игровые и AI-Механики</h2>
+    <ul>
+      <li>Кликер с AI-настройкой сложности через Grok</li>
+      <li>Индивидуальные награды на основе поведения</li>
+      <li>Возможность стейкинга для получения баффов</li>
+      <li>Дропы за достижения, холд и активность</li>
+    </ul>
+  </section>  <section id="future">
+    <h2>Будущее и CEX</h2>
+    <p>Когда проект достигнет зрелости и достаточного MCap, мы планируем листинг на централизованных биржах (CEX). Мы не называем конкретный уровень, но это произойдёт после достижения устойчивой фазы роста и комьюнити-поддержки.</p>
+    <ul>
+      <li>🔥 Больше интеграций с Web3-проектами</li>
+      <li>🌍 Международные партнёрства</li>
+      <li>💎 Усиление утилиты токена NXT</li>
+    </ul>
+  </section>  <script>
+    let tokenBalance = 0;
+    let leaderboard = [];
 
-<section id="about">
-  <h2>О нас</h2>
-  <p>Добро пожаловать в начало пути <strong>NeuroXTon</strong> — токена, за которым стоит идея, сообщество и технология.</p>
-  <ul>
-    <li>🧠 Интеграция с Grok AI внутри Web3-игры</li>
-    <li>🔥 NXT — это не мем. Это токен с целью.</li>
-    <li>📌 Первая цель — достичь $100,000 MCap</li>
-  </ul>
-  <p>Ты с нами в начале. Это не обещание “луны” — это старт реального пути, который мы пройдём вместе.</p>
-</section>
-
-<section id="roadmap">
-  <h2>Дорожная карта</h2>
-  <!-- ... (осталось без изменений) ... -->
-</section>
-
-<section id="mechanics">
-  <h2>Игровые и AI-Механики</h2>
-  <!-- ... (осталось без изменений) ... -->
-</section>
-
-<section id="future">
-  <h2>Будущее и CEX</h2>
-  <!-- ... (осталось без изменений) ... -->
-</section>
-
-<section id="wallet">
-  <h2>Подключение к кошельку</h2>
-  <div class="wallet-connection">
-    <button id="connect-wallet">Подключиться к Tonkeeper</button>
-    <p id="wallet-address"></p>
-  </div>
-</section>
-
-<div class="footer">
-  #NXT #NeuroXTon #GrokAI #TON #AIeconomy #Web3Gaming
-</div>
-
-  </div>  <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function incrementScore() {
+      tokenBalance++;
+      document.getElementById("tokenBalance").textContent = tokenBalance;
+      updateLeaderboard("Вы", tokenBalance);
     }
 
-    function incrementCounter() {
-      const countEl = document.getElementById('click-count');
-      let count = parseInt(countEl.innerText);
-      count++;
-      countEl.innerText = count;
-      document.getElementById('token-balance').innerText = count;
-    }
-
-    const tonConnect = new TON_CONNECT_UI.TonConnectUI({
-      manifestUrl: 'https://your-domain.com/tonconnect-manifest.json'
-    });
-
-    document.getElementById('connect-wallet').addEventListener('click', async () => {
-      const connected = await tonConnect.connectWallet();
-      const wallet = tonConnect.wallet;
-      if (wallet?.account?.address) {
-        document.getElementById('wallet-address').innerText = 'Ваш адрес: ' + wallet.account.address;
+    function updateLeaderboard(name, score) {
+      const entry = leaderboard.find(e => e.name === name);
+      if (entry) {
+        entry.score = score;
+      } else {
+        leaderboard.push({ name, score });
       }
-    });
+      leaderboard.sort((a, b) => b.score - a.score);
+      const list = document.getElementById("leaderboardList");
+      list.innerHTML = "";
+      leaderboard.forEach(entry => {
+        const li = document.createElement("li");
+        li.textContent = `${entry.name}: ${entry.score}`;
+        list.appendChild(li);
+      });
+    }
+
+    function connectWallet() {
+      alert("Здесь будет интеграция с Tonkeeper");
+    }
+
+    function showTab(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
   </script></body>
 </html>
