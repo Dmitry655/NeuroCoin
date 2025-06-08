@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroCoin</title>
+  <title>NeuroX</title>
   <style>
     :root {
       --primary-color: #00bfff;
@@ -13,135 +14,127 @@
     }
     * {
       box-sizing: border-box;
-    }body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
-
-h1 {
-  margin: 20px 0 10px;
-  font-size: 28px;
-  color: var(--primary-color);
-}
-
-#coin {
-  width: 150px;
-  height: 150px;
-  background-image: url("data:image/;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZW...");
-  background-size: cover;
-  background-position: center;
-  margin: 20px;
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-
-#coin:active {
-  transform: scale(0.95);
-}
-
-#counter {
-  font-size: 22px;
-  margin: 10px 0;
-}
-
-#levelBar {
-  width: 80%;
-  height: 20px;
-  background: #333;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  overflow: hidden;
-}
-
-#levelFill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-  transition: width 0.3s;
-}
-
-.tabs {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  background: #111;
-  padding: 10px 0;
-  border-top: 1px solid #222;
-}
-
-.tab {
-  color: var(--text-color);
-  text-align: center;
-  flex: 1;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.tab.active {
-  color: var(--primary-color);
-}
-
-.screen {
-  display: none;
-  width: 100%;
-  padding: 20px;
-  max-width: 500px;
-}
-
-.screen.active {
-  display: block;
-}
-
-.card {
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 15px;
-  margin: 10px 0;
-  box-shadow: 0 0 10px #0006;
-}
-
-.wallet-address {
-  font-size: 12px;
-  color: #bbb;
-  word-break: break-all;
-}
-
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 28px;
+      color: var(--primary-color);
+    }
+    #coin {
+      width: 150px;
+      height: 150px;
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Gold_coin_icon.png/600px-Gold_coin_icon.png");
+      background-size: cover;
+      background-position: center;
+      margin: 20px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    #coin:active {
+      transform: scale(0.95);
+    }
+    #counter {
+      font-size: 22px;
+      margin: 10px 0;
+    }
+    #levelBar {
+      width: 80%;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    #levelFill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      transition: width 0.3s;
+    }
+    .tabs {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: #111;
+      padding: 10px 0;
+      border-top: 1px solid #222;
+    }
+    .tab {
+      color: var(--text-color);
+      text-align: center;
+      flex: 1;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .tab.active {
+      color: var(--primary-color);
+    }
+    .screen {
+      display: none;
+      width: 100%;
+      padding: 20px;
+      max-width: 500px;
+    }
+    .screen.active {
+      display: block;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: 0 0 10px #0006;
+    }
+    .wallet-address {
+      font-size: 12px;
+      color: #bbb;
+      word-break: break-word;
+    }
   </style>
 </head>
 <body>
-  <h1>NeuroCoin</h1>
+  <h1>NeuroX</h1>
+
   <div id="main" class="screen active">
     <div id="coin"></div>
-    <div id="counter">Монет: 0</div>
+    <div id="counter">NeuroXTon (NXT): 0</div>
     <div id="levelBar"><div id="levelFill"></div></div>
   </div>
+
   <div id="friends" class="screen">
     <div class="card">
       <h3>Приглашай друзей</h3>
-      <p>За каждого друга — +100 монет</p>
+      <p>За каждого друга — +100 NXT</p>
       <input type="text" readonly value="https://t.me/your_bot?start=ref123" style="width: 100%; margin-top: 10px;">
     </div>
   </div>
+
   <div id="earn" class="screen">
-    <div class="card">Ежедневный бонус: +50 монет</div>
-    <div class="card">За вступление в канал: +150 монет</div>
-    <div class="card">За репост: +75 монет</div>
+    <div class="card">Ежедневный бонус: +50 NXT</div>
+    <div class="card">За вступление в канал: +150 NXT</div>
+    <div class="card">За репост: +75 NXT</div>
   </div>
+
   <div id="burn" class="screen">
     <div class="card">
       <h3>Сжечь монеты</h3>
       <p>Ускорь переход на следующий уровень</p>
-      <button style="margin-top: 10px">Сжечь 1000 монет</button>
+      <button style="margin-top: 10px">Сжечь 1000 NXT</button>
     </div>
   </div>
+
   <div id="wallet" class="screen">
     <div class="card">
       <h3>Ваш TON-кошелёк</h3>
@@ -150,10 +143,11 @@ h1 {
     </div>
     <div class="card">
       <h3>Баланс</h3>
-      <p>12 450 NAI</p>
+      <p>12 450 NXT</p>
       <button style="margin-top: 10px">Вывести</button>
     </div>
   </div>
+
   <div class="tabs">
     <div class="tab active" data-tab="main">Home</div>
     <div class="tab" data-tab="friends">Friends</div>
@@ -161,58 +155,43 @@ h1 {
     <div class="tab" data-tab="burn">Burn</div>
     <div class="tab" data-tab="wallet">Wallet</div>
   </div>
+
   <script>
     const LEVEL_STEP = 50000;
     let count = parseInt(localStorage.getItem('coinCount')) || 0;
     const coin = document.getElementById('coin');
     const counter = document.getElementById('counter');
-    const levelFill = document.getElementById('levelFill');function updateUI() {
-  const level = Math.floor(count / LEVEL_STEP) + 1;
-  const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
-  counter.innerText = `Монет: ${count} (уровень ${level})`;
-  levelFill.style.width = progress + '%';
-}
+    const levelFill = document.getElementById('levelFill');
 
-coin.addEventListener('click', () => {
-  count++;
-  localStorage.setItem('coinCount', count);
-  updateUI();
-});
+    function updateUI() {
+      const level = Math.floor(count / LEVEL_STEP) + 1;
+      const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
+      counter.innerText = `NeuroXTon (NXT): ${count} (уровень ${level})`;
+      levelFill.style.width = progress + '%';
+    }
 
-function sendCoinsToBackend() {
-  if (window.Telegram.WebApp) {
-    fetch("https://your-backend.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        initData: Telegram.WebApp.initData,
-        coins: count
-      })
-    }).then(res => {
-      if (!res.ok) throw new Error("Ошибка отправки данных");
-    }).catch(console.error);
-  }
-}
+    coin.addEventListener('click', () => {
+      count++;
+      localStorage.setItem('coinCount', count);
+      updateUI();
+    });
 
-setInterval(sendCoinsToBackend, 10000);
+    const tabs = document.querySelectorAll('.tab');
+    const screens = document.querySelectorAll('.screen');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        screens.forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
 
-const tabs = document.querySelectorAll('.tab');
-const screens = document.querySelectorAll('.screen');
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    screens.forEach(s => s.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.tab).classList.add('active');
-  });
-});
+    if (window.Telegram && Telegram.WebApp) {
+      Telegram.WebApp.expand();
+    }
 
-if (window.Telegram.WebApp) {
-  Telegram.WebApp.expand();
-}
-
-updateUI();
-
+    updateUI();
   </script>
 </body>
 </html>
