@@ -34,7 +34,7 @@ h1 {
 #coin {
   width: 150px;
   height: 150px;
-  background-image: url("/mnt/data/file-6wRBrre5zNF7JFgP9HEREt");
+  background-image: url("data:image/;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZW...");
   background-size: cover;
   background-position: center;
   margin: 20px;
@@ -49,6 +49,22 @@ h1 {
 #counter {
   font-size: 22px;
   margin: 10px 0;
+}
+
+#levelBar {
+  width: 80%;
+  height: 20px;
+  background: #333;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+#levelFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  transition: width 0.3s;
 }
 
 #send {
@@ -116,6 +132,7 @@ h1 {
   <h1>NeuroCoin</h1>  <div id="main" class="screen active">
     <div id="coin"></div>
     <div id="counter">Монет: 0</div>
+    <div id="levelBar"><div id="levelFill"></div></div>
     <button id="send">Отправить боту</button>
   </div>  <div id="friends" class="screen">
     <div class="card">
@@ -151,19 +168,26 @@ h1 {
     <div class="tab" data-tab="burn">Burn</div>
     <div class="tab" data-tab="wallet">Wallet</div>
   </div>  <script>
-    let count = 0;
     const LEVEL_STEP = 50000;
+    let count = parseInt(localStorage.getItem('coinCount')) || 0;
     const coin = document.getElementById('coin');
     const counter = document.getElementById('counter');
-    const sendBtn = document.getElementById('send');
+    const levelFill = document.getElementById('levelFill');
+
+    function updateUI() {
+      const level = Math.floor(count / LEVEL_STEP) + 1;
+      const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
+      counter.innerText = `Монет: ${count} (уровень ${level})`;
+      levelFill.style.width = progress + '%';
+    }
 
     coin.addEventListener('click', () => {
       count++;
-      let level = Math.floor(count / LEVEL_STEP) + 1;
-      counter.innerText = `Монет: ${count} (уровень ${level})`;
+      localStorage.setItem('coinCount', count);
+      updateUI();
     });
 
-    sendBtn.addEventListener('click', () => {
+    document.getElementById('send').addEventListener('click', () => {
       if (window.Telegram.WebApp) {
         window.Telegram.WebApp.sendData(JSON.stringify({ coins: count }));
         window.Telegram.WebApp.close();
@@ -172,7 +196,6 @@ h1 {
       }
     });
 
-    // вкладки
     const tabs = document.querySelectorAll('.tab');
     const screens = document.querySelectorAll('.screen');
     tabs.forEach(tab => {
@@ -184,9 +207,10 @@ h1 {
       });
     });
 
-    // Telegram WebApp init
     if (window.Telegram.WebApp) {
       Telegram.WebApp.expand();
     }
+
+    updateUI();
   </script></body>
 </html>
