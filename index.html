@@ -10,11 +10,10 @@
       --bg-color: #0e0e1a;
       --text-color: #ffffff;
       --card-bg: #1a1a2e;
-    }* {
-  box-sizing: border-box;
-}
-
-body {
+    }
+    * {
+      box-sizing: border-box;
+    }body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: var(--bg-color);
@@ -65,17 +64,6 @@ h1 {
   width: 0%;
   background: linear-gradient(to right, var(--primary-color), var(--accent-color));
   transition: width 0.3s;
-}
-
-#send {
-  margin: 20px 0;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
-  background: var(--accent-color);
-  color: white;
-  cursor: pointer;
 }
 
 .tabs {
@@ -129,28 +117,32 @@ h1 {
   </style>
 </head>
 <body>
-  <h1>NeuroCoin</h1>  <div id="main" class="screen active">
+  <h1>NeuroCoin</h1>
+  <div id="main" class="screen active">
     <div id="coin"></div>
     <div id="counter">Монет: 0</div>
     <div id="levelBar"><div id="levelFill"></div></div>
-    <button id="send">Отправить боту</button>
-  </div>  <div id="friends" class="screen">
+  </div>
+  <div id="friends" class="screen">
     <div class="card">
       <h3>Приглашай друзей</h3>
       <p>За каждого друга — +100 монет</p>
       <input type="text" readonly value="https://t.me/your_bot?start=ref123" style="width: 100%; margin-top: 10px;">
     </div>
-  </div>  <div id="earn" class="screen">
+  </div>
+  <div id="earn" class="screen">
     <div class="card">Ежедневный бонус: +50 монет</div>
     <div class="card">За вступление в канал: +150 монет</div>
     <div class="card">За репост: +75 монет</div>
-  </div>  <div id="burn" class="screen">
+  </div>
+  <div id="burn" class="screen">
     <div class="card">
       <h3>Сжечь монеты</h3>
       <p>Ускорь переход на следующий уровень</p>
       <button style="margin-top: 10px">Сжечь 1000 монет</button>
     </div>
-  </div>  <div id="wallet" class="screen">
+  </div>
+  <div id="wallet" class="screen">
     <div class="card">
       <h3>Ваш TON-кошелёк</h3>
       <p class="wallet-address">EQC5...Yk9a</p>
@@ -161,56 +153,66 @@ h1 {
       <p>12 450 NAI</p>
       <button style="margin-top: 10px">Вывести</button>
     </div>
-  </div>  <div class="tabs">
+  </div>
+  <div class="tabs">
     <div class="tab active" data-tab="main">Home</div>
     <div class="tab" data-tab="friends">Friends</div>
     <div class="tab" data-tab="earn">Earn</div>
     <div class="tab" data-tab="burn">Burn</div>
     <div class="tab" data-tab="wallet">Wallet</div>
-  </div>  <script>
+  </div>
+  <script>
     const LEVEL_STEP = 50000;
     let count = parseInt(localStorage.getItem('coinCount')) || 0;
     const coin = document.getElementById('coin');
     const counter = document.getElementById('counter');
-    const levelFill = document.getElementById('levelFill');
+    const levelFill = document.getElementById('levelFill');function updateUI() {
+  const level = Math.floor(count / LEVEL_STEP) + 1;
+  const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
+  counter.innerText = `Монет: ${count} (уровень ${level})`;
+  levelFill.style.width = progress + '%';
+}
 
-    function updateUI() {
-      const level = Math.floor(count / LEVEL_STEP) + 1;
-      const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
-      counter.innerText = `Монет: ${count} (уровень ${level})`;
-      levelFill.style.width = progress + '%';
-    }
+coin.addEventListener('click', () => {
+  count++;
+  localStorage.setItem('coinCount', count);
+  updateUI();
+});
 
-    coin.addEventListener('click', () => {
-      count++;
-      localStorage.setItem('coinCount', count);
-      updateUI();
-    });
+function sendCoinsToBackend() {
+  if (window.Telegram.WebApp) {
+    fetch("https://your-backend.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        initData: Telegram.WebApp.initData,
+        coins: count
+      })
+    }).then(res => {
+      if (!res.ok) throw new Error("Ошибка отправки данных");
+    }).catch(console.error);
+  }
+}
 
-    document.getElementById('send').addEventListener('click', () => {
-      if (window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify({ coins: count }));
-        window.Telegram.WebApp.close();
-      } else {
-        alert("Telegram WebApp не инициализирован");
-      }
-    });
+setInterval(sendCoinsToBackend, 10000);
 
-    const tabs = document.querySelectorAll('.tab');
-    const screens = document.querySelectorAll('.screen');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        screens.forEach(s => s.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
-    });
+const tabs = document.querySelectorAll('.tab');
+const screens = document.querySelectorAll('.screen');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    screens.forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
 
-    if (window.Telegram.WebApp) {
-      Telegram.WebApp.expand();
-    }
+if (window.Telegram.WebApp) {
+  Telegram.WebApp.expand();
+}
 
-    updateUI();
-  </script></body>
+updateUI();
+
+  </script>
+</body>
 </html>
