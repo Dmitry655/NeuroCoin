@@ -1,197 +1,195 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroXTon App</title>
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect.umd.min.js"></script>
   <style>
-    :root {
-      --primary-color: #00bfff;
-      --accent-color: #7b2ff7;
-      --bg-color: #0e0e1a;
-      --text-color: #ffffff;
-      --card-bg: #1a1a2e;
-    }
-    * {
-      box-sizing: border-box;
-    }
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      background-color: #0c0c0e;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
     }
-    h1 {
-      margin: 20px 0 10px;
-      font-size: 28px;
-      color: var(--primary-color);
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
     }
-    #coin {
-      width: 150px;
-      height: 150px;
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Gold_coin_icon.png/600px-Gold_coin_icon.png");
-      background-size: cover;
-      background-position: center;
-      margin: 20px;
-      cursor: pointer;
-      transition: transform 0.1s;
+    h1, h2, h3 {
+      color: #00ffff;
     }
-    #coin:active {
-      transform: scale(0.95);
-    }
-    #counter {
-      font-size: 22px;
-      margin: 10px 0;
-    }
-    #levelBar {
-      width: 80%;
-      height: 20px;
-      background: #333;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    #levelFill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-      transition: width 0.3s;
-    }
-    .tabs {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+    nav {
       display: flex;
       justify-content: space-around;
-      background: #111;
-      padding: 10px 0;
-      border-top: 1px solid #222;
+      background-color: #1a1a1f;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .tab {
-      color: var(--text-color);
-      text-align: center;
-      flex: 1;
-      font-size: 14px;
+    nav button {
+      background: none;
+      border: none;
+      color: #00ffff;
+      font-weight: bold;
       cursor: pointer;
+      font-size: 1rem;
     }
-    .tab.active {
-      color: var(--primary-color);
-    }
-    .screen {
+    section {
       display: none;
-      width: 100%;
-      padding: 20px;
-      max-width: 500px;
+      padding: 1.5rem 0;
     }
-    .screen.active {
+    section.active {
       display: block;
     }
     .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 15px;
-      margin: 10px 0;
-      box-shadow: 0 0 10px #0006;
+      background-color: #1a1a1f;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #00ffff;
+      border-radius: 10px;
     }
-    .wallet-address {
-      font-size: 12px;
-      color: #bbb;
-      word-break: break-word;
+    ul {
+      padding-left: 1.5rem;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+    .wallet-connection {
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+    #connect-wallet {
+      padding: 0.6rem 1.2rem;
+      background: #00ffff;
+      border: none;
+      color: #000;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #wallet-address {
+      margin-top: 0.5rem;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-  <h1>NeuroX</h1>
+  <nav>
+    <button onclick="showSection('intro')">Главная</button>
+    <button onclick="showSection('roadmap')">Дорожная карта</button>
+    <button onclick="showSection('mechanics')">Механики</button>
+    <button onclick="showSection('future')">Будущее</button>
+  </nav>  <div class="container">
+    <div class="wallet-connection">
+      <button id="connect-wallet">Подключиться к Tonkeeper</button>
+      <p id="wallet-address"></p>
+    </div><section id="intro" class="active">
+  <h1>Привет, холдеры и участники!</h1>
+  <p>Добро пожаловать в начало пути <strong>NeuroXTon</strong> — токена, за которым стоит идея, сообщество и технология.</p>
+  <ul>
+    <li>🧠 Интеграция с Grok AI внутри Web3-игры</li>
+    <li>🔥 NXT — это не мем. Это токен с целью.</li>
+    <li>📌 Первая цель — достичь $100,000 MCap</li>
+  </ul>
+  <p>Ты с нами в начале. Это не обещание “луны” — это старт реального пути, который мы пройдём вместе.</p>
+</section>
 
-  <div id="main" class="screen active">
-    <div id="coin"></div>
-    <div id="counter">NeuroXTon (NXT): 0</div>
-    <div id="levelBar"><div id="levelFill"></div></div>
+<section id="roadmap">
+  <h2>Дорожная карта</h2>
+  <div class="card">
+    <h3>$100K+ — Старт</h3>
+    <ul>
+      <li>Запуск игры с Grok AI</li>
+      <li>Первый AI-дроп</li>
+      <li>Публичный дешборд</li>
+      <li>Тест-квесты и награды</li>
+    </ul>
   </div>
-
-  <div id="friends" class="screen">
-    <div class="card">
-      <h3>Приглашай друзей</h3>
-      <p>За каждого друга — +100 NXT</p>
-      <input type="text" readonly value="https://t.me/your_bot?start=ref123" style="width: 100%; margin-top: 10px;">
-    </div>
+  <div class="card">
+    <h3>$250K+ — Активация</h3>
+    <ul>
+      <li>Lockdrop с OG-наградами</li>
+      <li>AI-стейкинг</li>
+      <li>PvE-сражения</li>
+      <li>Комьюнити-дроп</li>
+    </ul>
   </div>
-
-  <div id="earn" class="screen">
-    <div class="card">Ежедневный бонус: +50 NXT</div>
-    <div class="card">За вступление в канал: +150 NXT</div>
-    <div class="card">За репост: +75 NXT</div>
+  <div class="card">
+    <h3>$500K+ — Расширение</h3>
+    <ul>
+      <li>AI-квесты</li>
+      <li>Маркетплейс на TON</li>
+      <li>AI-ассистент</li>
+      <li>Геймифицированный стейкинг</li>
+    </ul>
   </div>
-
-  <div id="burn" class="screen">
-    <div class="card">
-      <h3>Сжечь монеты</h3>
-      <p>Ускорь переход на следующий уровень</p>
-      <button style="margin-top: 10px">Сжечь 1000 NXT</button>
-    </div>
+  <div class="card">
+    <h3>$750K+ — Ускорение</h3>
+    <ul>
+      <li>AI-режим "Campaign"</li>
+      <li>DAO-голосования</li>
+      <li>AI-профили игроков</li>
+      <li>NFT-дропы</li>
+    </ul>
   </div>
-
-  <div id="wallet" class="screen">
-    <div class="card">
-      <h3>Ваш TON-кошелёк</h3>
-      <p class="wallet-address">EQC5...Yk9a</p>
-      <button style="margin-top: 10px">Отвязать</button>
-    </div>
-    <div class="card">
-      <h3>Баланс</h3>
-      <p>12 450 NXT</p>
-      <button style="margin-top: 10px">Вывести</button>
-    </div>
+  <div class="card">
+    <h3>$1M+ — Раскрытие потенциала</h3>
+    <ul>
+      <li>AI-метавселенная</li>
+      <li>Мобильное приложение</li>
+      <li>PvP-арены с Grok</li>
+      <li>AI-контракты</li>
+    </ul>
   </div>
+</section>
 
-  <div class="tabs">
-    <div class="tab active" data-tab="main">Home</div>
-    <div class="tab" data-tab="friends">Friends</div>
-    <div class="tab" data-tab="earn">Earn</div>
-    <div class="tab" data-tab="burn">Burn</div>
-    <div class="tab" data-tab="wallet">Wallet</div>
-  </div>
+<section id="mechanics">
+  <h2>Игровые и AI-Механики</h2>
+  <ul>
+    <li>🔒 <strong>Lockdrop</strong>: блокировка монет ради OG-доступа</li>
+    <li>📈 <strong>Staking</strong>: получение APR и бонусов в игре</li>
+    <li>🎁 <strong>AI-дропы</strong>: награды за активность и лояльность</li>
+    <li>🧠 <strong>AI-квесты</strong>: уникальные миссии, генерируемые Grok</li>
+    <li>⚔️ <strong>PvE и PvP</strong>: сражения с ИИ и игроками</li>
+    <li>🧬 <strong>AI-профили</strong>: эволюция вашего игрового аватара</li>
+  </ul>
+</section>
 
-  <script>
-    const LEVEL_STEP = 50000;
-    let count = parseInt(localStorage.getItem('coinCount')) || 0;
-    const coin = document.getElementById('coin');
-    const counter = document.getElementById('counter');
-    const levelFill = document.getElementById('levelFill');
+<section id="future">
+  <h2>Будущее и CEX</h2>
+  <p>Когда придёт время — <strong>листинг на CEX</strong>. ⏳ Не по графику. По смыслу.</p>
+  <p>NeuroXTon не гонится за хайпом. Он создаёт ценность шаг за шагом.</p>
+</section>
 
-    function updateUI() {
-      const level = Math.floor(count / LEVEL_STEP) + 1;
-      const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
-      counter.innerText = `NeuroXTon (NXT): ${count} (уровень ${level})`;
-      levelFill.style.width = progress + '%';
+<div class="footer">
+  #NXT #NeuroXTon #GrokAI #TON #AIeconomy #Web3Gaming
+</div>
+
+  </div>  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
 
-    coin.addEventListener('click', () => {
-      count++;
-      localStorage.setItem('coinCount', count);
-      updateUI();
+    const tonConnect = new TON_CONNECT_UI.TonConnectUI({
+      manifestUrl: 'https://your-domain.com/tonconnect-manifest.json'
     });
 
-    const tabs = document.querySelectorAll('.tab');
-    const screens = document.querySelectorAll('.screen');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        screens.forEach(s => s.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
+    document.getElementById('connect-wallet').addEventListener('click', async () => {
+      const connected = await tonConnect.connectWallet();
+      const wallet = tonConnect.wallet;
+      if (wallet?.account?.address) {
+        document.getElementById('wallet-address').innerText = 'Ваш адрес: ' + wallet.account.address;
+      }
     });
-
-    if (window.Telegram && Telegram.WebApp) {
-      Telegram.WebApp.expand();
-    }
-
-    updateUI();
-  </script>
-</body>
+  </script></body>
 </html>
