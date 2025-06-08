@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,7 +26,9 @@
       <a href="#mechanics" onclick="showTab('mechanics')">Механики</a>
       <a href="#future" onclick="showTab('future')">Будущее</a>
     </nav>
-  </header>  <section id="game" class="active">
+  </header>
+
+  <section id="game" class="active">
     <h2>Кликер</h2>
     <button onclick="incrementScore()">Кликни меня!</button>
     <div class="token-balance">Ваши токены: <span id="tokenBalance">0</span></div>
@@ -33,10 +36,14 @@
       <h3>Лидерборд</h3>
       <ol id="leaderboardList"></ol>
     </div>
-  </section>  <section id="wallet">
+  </section>
+
+  <section id="wallet">
     <h2>Подключение к Tonkeeper</h2>
     <button onclick="connectWallet()">Подключиться</button>
-  </section>  <section id="about">
+  </section>
+
+  <section id="about">
     <h2>О нас</h2>
     <p>
       Привет, холдеры и участники нашего движения!<br>
@@ -48,7 +55,9 @@
       Спасибо, что веришь. Спасибо, что держишь.<br>
       Вперёд, NeuroXTon. Это только начало.
     </p>
-  </section>  <section id="roadmap">
+  </section>
+
+  <section id="roadmap">
     <h2>Дорожная карта</h2>
     <ul>
       <li><strong>$100K MCap</strong> — запуск полноценной игры</li>
@@ -56,7 +65,9 @@
       <li><strong>$500K</strong> — масштабирование, новые режимы, AI-механики</li>
       <li><strong>$1M+</strong> — интеграция с CEX и мощный маркетинг</li>
     </ul>
-  </section>  <section id="mechanics">
+  </section>
+
+  <section id="mechanics">
     <h2>Игровые и AI-Механики</h2>
     <ul>
       <li>Кликер с AI-настройкой сложности через Grok</li>
@@ -64,7 +75,9 @@
       <li>Возможность стейкинга для получения баффов</li>
       <li>Дропы за достижения, холд и активность</li>
     </ul>
-  </section>  <section id="future">
+  </section>
+
+  <section id="future">
     <h2>Будущее и CEX</h2>
     <p>Когда проект достигнет зрелости и достаточного MCap, мы планируем листинг на централизованных биржах (CEX). Мы не называем конкретный уровень, но это произойдёт после достижения устойчивой фазы роста и комьюнити-поддержки.</p>
     <ul>
@@ -72,7 +85,9 @@
       <li>🌍 Международные партнёрства</li>
       <li>💎 Усиление утилиты токена NXT</li>
     </ul>
-  </section>  <script>
+  </section>
+
+  <script>
     let tokenBalance = 0;
     let leaderboard = [];
 
@@ -107,5 +122,6 @@
       document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
-  </script></body>
+  </script>
+</body>
 </html>
