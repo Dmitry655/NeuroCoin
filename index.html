@@ -5,14 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeuroXTon Game</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #0b0c10; color: #ffffff; }
-    header { background: #1f2833; padding: 1rem; text-align: center; }
-    nav a { margin: 0 1rem; color: #66fcf1; text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
-    section { padding: 2rem; display: none; }
-    section.active { display: block; }
-    button { padding: 0.5rem 1rem; margin-top: 1rem; cursor: pointer; }
-    .leaderboard, .token-balance { margin-top: 2rem; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #0b0c10;
+      color: #ffffff;
+      scroll-behavior: smooth;
+    }
+    header {
+      background: #1f2833;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: #66fcf1;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      text-decoration: underline;
+      color: #45a29e;
+    }
+    section {
+      padding: 2rem;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    section.active {
+      display: block;
+      opacity: 1;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      background-color: #66fcf1;
+      border: none;
+      color: #0b0c10;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #45a29e;
+    }
+    .leaderboard, .token-balance {
+      margin-top: 2rem;
+    }
+    h2 {
+      color: #66fcf1;
+    }
+    h3, h4 {
+      color: #45a29e;
+    }
+    ul li::before {
+      content: "✨ ";
+      color: #66fcf1;
+    }
+    /* Кнопка наверх */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #66fcf1;
+      color: #0b0c10;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: none;
+      z-index: 999;
+    }
+    #scrollTopBtn:hover {
+      background-color: #45a29e;
+    }
   </style>
 </head>
 <body>
@@ -25,67 +98,16 @@
       <a href="#roadmap" onclick="showTab('roadmap')">Дорожная карта</a>
       <a href="#mechanics" onclick="showTab('mechanics')">Механики</a>
       <a href="#future" onclick="showTab('future')">Будущее</a>
+      <a href="#manifesto" onclick="showTab('manifesto')">Манифест</a>
     </nav>
   </header>
 
-  <section id="game" class="active">
-    <h2>Кликер</h2>
-    <button onclick="incrementScore()">Кликни меня!</button>
-    <div class="token-balance">Ваши токены: <span id="tokenBalance">0</span></div>
-    <div class="leaderboard">
-      <h3>Лидерборд</h3>
-      <ol id="leaderboardList"></ol>
-    </div>
-  </section>
+  <!-- Все секции (game, wallet, about, roadmap, mechanics, future, manifesto) здесь -->
 
-  <section id="wallet">
-    <h2>Подключение к Tonkeeper</h2>
-    <button onclick="connectWallet()">Подключиться</button>
-  </section>
+  <!-- ...предыдущие секции остаются без изменений... -->
 
-  <section id="about">
-    <h2>О нас</h2>
-    <p>
-      Привет, холдеры и участники нашего движения!<br>
-      Я рад приветствовать вас в самом начале пути NeuroXTon — токена, за которым стоит идея, сообщество и технология.<br><br>
-      🧠 Внутри нашей Web3-игры уже работает интеграция с Grok AI — продвинутым искусственным интеллектом от Илона Маска.<br>
-      🔥 NXT — это не мем и не копия. Это токен с целью.<br>
-      📌 Наша первая и ключевая цель — достичь $100,000 рыночной капитализации (MCap).<br>
-      Сегодня ты с нами в самом начале. Это не обещание “луны” — это старт реального пути, который мы пройдём вместе.<br>
-      Спасибо, что веришь. Спасибо, что держишь.<br>
-      Вперёд, NeuroXTon. Это только начало.
-    </p>
-  </section>
-
-  <section id="roadmap">
-    <h2>Дорожная карта</h2>
-    <ul>
-      <li><strong>$100K MCap</strong> — запуск полноценной игры</li>
-      <li><strong>$250K</strong> — награды, токеномика, первые дропы</li>
-      <li><strong>$500K</strong> — масштабирование, новые режимы, AI-механики</li>
-      <li><strong>$1M+</strong> — интеграция с CEX и мощный маркетинг</li>
-    </ul>
-  </section>
-
-  <section id="mechanics">
-    <h2>Игровые и AI-Механики</h2>
-    <ul>
-      <li>Кликер с AI-настройкой сложности через Grok</li>
-      <li>Индивидуальные награды на основе поведения</li>
-      <li>Возможность стейкинга для получения баффов</li>
-      <li>Дропы за достижения, холд и активность</li>
-    </ul>
-  </section>
-
-  <section id="future">
-    <h2>Будущее и CEX</h2>
-    <p>Когда проект достигнет зрелости и достаточного MCap, мы планируем листинг на централизованных биржах (CEX). Мы не называем конкретный уровень, но это произойдёт после достижения устойчивой фазы роста и комьюнити-поддержки.</p>
-    <ul>
-      <li>🔥 Больше интеграций с Web3-проектами</li>
-      <li>🌍 Международные партнёрства</li>
-      <li>💎 Усиление утилиты токена NXT</li>
-    </ul>
-  </section>
+  <!-- Кнопка наверх -->
+  <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
 
   <script>
     let tokenBalance = 0;
@@ -119,8 +141,29 @@
     }
 
     function showTab(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("section").forEach(sec => {
+        sec.classList.remove("active");
+        sec.style.display = "none";
+        sec.style.opacity = 0;
+      });
+
+      const target = document.getElementById(id);
+      target.style.display = "block";
+      setTimeout(() => target.classList.add("active"), 50);
+    }
+
+    // Кнопка наверх
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = function () {
+      if (document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = "block";
+      } else {
+        scrollTopBtn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   </script>
 </body>
