@@ -1,153 +1,196 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>NeuroXTon Game</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #0b0c10; color: #cfd8dc; }
-    header { background: #121416; padding: 1rem; text-align: center; border-bottom: 2px solid #00ffe7; }
-    nav a { margin: 0 1rem; color: #00ffe7; text-decoration: none; font-weight: 600; }
-    nav a:hover, nav a.active { text-decoration: underline; color: #45f3ff; }
-    section { padding: 2rem; display: none; max-width: 900px; margin: auto; }
-    section.active { display: block; }
-    button { padding: 0.6rem 1.2rem; margin-top: 1rem; cursor: pointer; background: #00ffe7; border: none; border-radius: 5px; color: #121416; font-weight: 700; transition: background 0.3s ease; }
-    button:hover { background: #45f3ff; }
-    h1, h2, h3 { color: #00ffe7; }
-    ul, ol { padding-left: 1.5rem; }
-    .token-balance, .leaderboard { margin-top: 1.5rem; background: #121416; padding: 1rem; border-radius: 8px; box-shadow: 0 0 10px #00ffe7aa; }
-    .leaderboard li { padding: 0.3rem 0; }
-    p, li { line-height: 1.5; }
-    hr { border: 0; border-top: 1px solid #004c4c; margin: 2rem 0; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+      overflow-x: hidden;
+    }header {
+  display: none; /* Телеграм сам отображает заголовки */
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: #1c1c1c;
+  padding: 0.5rem 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #333;
+  z-index: 1000;
+}
+
+nav a {
+  color: #66fcf1;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+section {
+  padding: 1rem;
+  display: none;
+  min-height: calc(100vh - 56px);
+}
+
+section.active {
+  display: block;
+}
+
+.token-display {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.token-display h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: gold;
+}
+
+.rank {
+  font-size: 1.2rem;
+  color: #aaa;
+}
+
+.energy-bar {
+  width: 90%;
+  margin: 1rem auto;
+  height: 10px;
+  background: #333;
+  border-radius: 5px;
+}
+
+.energy-fill {
+  height: 100%;
+  background: #ffd700;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.profile {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.profile img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #66fcf1;
+}
+
+.grok-companion {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.grok-companion h3 {
+  margin-top: 0;
+  color: #66fcf1;
+}
+
+.grok-companion ul {
+  padding-left: 1.2rem;
+}
+
+button {
+  background: #66fcf1;
+  color: #000;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.leaderboard {
+  margin-top: 2rem;
+}
+
+.leaderboard li {
+  padding: 0.3rem;
+}
+
   </style>
 </head>
-<body>
-  <header>
-    <h1>NeuroXTon</h1>
-    <nav>
-      <a href="#game" onclick="showTab('game'); setActiveNav(this);" class="active">Игра</a>
-      <a href="#wallet" onclick="showTab('wallet'); setActiveNav(this);">Wallet</a>
-      <a href="#about" onclick="showTab('about'); setActiveNav(this);">О нас</a>
-      <a href="#roadmap" onclick="showTab('roadmap'); setActiveNav(this);">Дорожная карта</a>
-      <a href="#mechanics" onclick="showTab('mechanics'); setActiveNav(this);">Механики</a>
-      <a href="#future" onclick="showTab('future'); setActiveNav(this);">Будущее</a>
-    </nav>
-  </header>
-
-  <section id="game" class="active">
-    <h2>Кликер</h2>
-    <button onclick="incrementScore()">Кликни меня!</button>
-    <div class="token-balance">Ваши токены: <span id="tokenBalance">0</span></div>
+<body>  <section id="game" class="active">
+    <div class="profile">
+      <img src="https://i.imgur.com/DFRMU3W.png" alt="avatar" />
+      <h2>Игрок</h2>
+    </div>
+    <div class="token-display">
+      <h2 id="tokenBalance">0</h2>
+      <div class="rank" id="rankLabel">RANK: Bronze</div>
+    </div>
+    <div class="energy-bar">
+      <div class="energy-fill"></div>
+    </div>
+    <div style="text-align:center">
+      <button onclick="incrementScore()">Кликни!</button>
+    </div>
+    <div class="grok-companion">
+      <h3>🤖 AI-Компаньон: Grok</h3>
+      <ul>
+        <li>AI-настройка сложности</li>
+        <li>Умный советник в реальном времени</li>
+        <li>Диалог голосом или текстом</li>
+        <li>AI-анти-чит и награды</li>
+        <li>Будущий анализ рынка NXT</li>
+      </ul>
+    </div>
     <div class="leaderboard">
-      <h3>Лидерборд</h3>
+      <h3>🏆 Лидерборд</h3>
       <ol id="leaderboardList"></ol>
     </div>
-  </section>
-
-  <section id="wallet">
-    <h2>Подключение к Tonkeeper</h2>
-    <button onclick="connectWallet()">Подключиться</button>
-  </section>
-
-  <section id="about">
-    <h2>О нас</h2>
-    <p>
-      Привет, холдеры и участники движения NeuroXTon!<br><br>
-      Мы стоим в начале большого пути.<br>
-      NXT — это не просто токен. Это идея. Это комьюнити. Это технология.<br><br>
-      🧠 Внутри нашей Web3-игры уже работает интеграция с Grok AI — искусственным интеллектом от Илона Маска.<br>
-      Это не просто фича. Это сердце экосистемы:<br><br>
-      🎮 AI-генерация квестов и событий<br>
-      🤖 Умный напарник и советник в реальном времени<br>
-      📊 Адаптивная сложность, персонализированная под стиль игрока<br>
-      🛡 AI-анти-чит и модерация<br>
-      💬 Диалог с Grok прямо в игре — голосом или текстом<br>
-      📈 В будущем — AI-ассистент для анализа поведения токена и трейдинга<br><br>
-      🔥 NXT — не мем и не клон. Это токен с целью.
-    </p>
-  </section>
-
-  <section id="roadmap">
-    <h2>Дорожная карта</h2>
-    <p>🎯 <strong>NEUROXTON ROAD: ПУТЬ К СИЛЕ</strong><br>Token. AI. Game. Community.</p>
-    <hr>
-    <h3>🔹 $100K+ — Старт</h3>
+  </section>  <section id="wallet">
+    <h2>🔗 Подключение</h2>
+    <p>Интеграция с Tonkeeper появится в ближайших обновлениях.</p>
+    <button onclick="connectWallet()">Подключить</button>
+  </section>  <section id="about">
+    <h2>О NeuroXTon</h2>
+    <p>Web3-игра с AI-ядром от Grok. Персонализация, челленджи и награды. Сообщество строит ценность. </p>
+  </section>  <section id="roadmap">
+    <h2>📈 Дорожная карта</h2>
     <ul>
-      <li>🚀 Запуск игры с Grok AI</li>
-      <li>🎁 Первый AI-дроп</li>
-      <li>📊 Публичный дешборд</li>
-      <li>🎮 Тест-квесты и награды</li>
+      <li><strong>$100K</strong> — запуск AI-игры</li>
+      <li><strong>$250K</strong> — Lockdrop, дропы, PvE</li>
+      <li><strong>$500K</strong> — AI миссии, маркетплейс</li>
+      <li><strong>$750K</strong> — сюжетный режим, DAO</li>
+      <li><strong>$1M+</strong> — Метавселенная, PvP, мобильное приложение</li>
     </ul>
-
-    <h3>🔹 $250K+ — Активация</h3>
-    <ul>
-      <li>🔒 Lockdrop с OG-наградами</li>
-      <li>🌱 Альфа-версия AI-стейкинга</li>
-      <li>⚔️ PvE-сражения с интеллектом</li>
-      <li>🪂 Комьюнити-дроп</li>
-      <li>🎥 Web3-инфлюенсеры</li>
-    </ul>
-
-    <h3>🔹 $500K+ — Расширение</h3>
-    <ul>
-      <li>🧠 AI-сгенерированные миссии</li>
-      <li>🛍 Маркетплейс на TON</li>
-      <li>📈 AI-ассистент для анализа NXT</li>
-      <li>🎮 Умный стейкинг с геймификацией</li>
-      <li>🌍 Интернациональные сообщества</li>
-      <li>🤝 Интеграции с TON-проектами</li>
-    </ul>
-
-    <h3>🔹 $750K+ — Ускорение</h3>
-    <ul>
-      <li>📜 Сюжетный AI-режим “Campaign”</li>
-      <li>🗳 DAO-голосования</li>
-      <li>👤 Прокачка AI-профилей игроков</li>
-      <li>🏆 NFT-дропы редких предметов</li>
-      <li>🏦 Подключение к DeFi-продуктам TON</li>
-    </ul>
-
-    <h3>🔹 $1M+ — Раскрытие потенциала</h3>
-    <ul>
-      <li>🌌 Метавселенная NeuroXTon</li>
-      <li>📲 Мобильное приложение</li>
-      <li>⚔️ PvP-арены с Grok AI</li>
-      <li>🔄 AI-контракты для трейдинга</li>
-      <li>🧬 Комьюнити-лаборатория: выдвигай — Grok реализует</li>
-    </ul>
-
-    <hr>
-    <p>🛸 и кое-что ещё…<br>Когда всё будет готово —<br>📢 Листинг на CEX.<br>⏳ Не по графику. По смыслу.</p>
-  </section>
-
-  <section id="mechanics">
-    <h2>Игровые и AI-Механики</h2>
-    <ul>
-      <li>Кликер с AI-настройкой сложности через Grok</li>
-      <li>Индивидуальные награды на основе поведения</li>
-      <li>Возможность стейкинга для получения баффов</li>
-      <li>Дропы за достижения, холд и активность</li>
-    </ul>
-  </section>
-
-  <section id="future">
-    <h2>Будущее и CEX</h2>
-    <p>Когда проект достигнет зрелости и достаточного MCap, мы планируем листинг на централизованных биржах (CEX). Мы не называем конкретный уровень, но это произойдёт после достижения устойчивой фазы роста и комьюнити-поддержки.</p>
-    <ul>
-      <li>🔥 Больше интеграций с Web3-проектами</li>
-      <li>🌍 Международные партнёрства</li>
-      <li>💎 Усиление утилиты токена NXT</li>
-    </ul>
-  </section>
-
-  <script>
+  </section>  <nav>
+    <a href="#game" onclick="showTab('game')">Игра</a>
+    <a href="#wallet" onclick="showTab('wallet')">Кошелёк</a>
+    <a href="#about" onclick="showTab('about')">О нас</a>
+    <a href="#roadmap" onclick="showTab('roadmap')">Карта</a>
+  </nav>  <script>
     let tokenBalance = 0;
     let leaderboard = [];
 
     function incrementScore() {
       tokenBalance++;
       document.getElementById("tokenBalance").textContent = tokenBalance;
+      updateRank();
       updateLeaderboard("Вы", tokenBalance);
+    }
+
+    function updateRank() {
+      let rank = "Bronze";
+      if (tokenBalance >= 1000000) rank = "Bronze";
+      if (tokenBalance >= 5000000) rank = "Silver";
+      if (tokenBalance >= 10000000) rank = "Gold";
+      if (tokenBalance >= 25000000) rank = "Diamond";
+      if (tokenBalance >= 50000000) rank = "Legendary";
+      document.getElementById("rankLabel").textContent = `RANK: ${rank}`;
     }
 
     function updateLeaderboard(name, score) {
@@ -168,18 +211,12 @@
     }
 
     function connectWallet() {
-      alert("Здесь будет интеграция с Tonkeeper");
+      alert("Интеграция скоро будет доступна");
     }
 
     function showTab(id) {
       document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
-
-    function setActiveNav(elem) {
-      document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
-      elem.classList.add("active");
-    }
-  </script>
-</body>
+  </script></body>
 </html>
