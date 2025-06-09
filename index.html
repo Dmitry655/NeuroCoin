@@ -1,222 +1,113 @@
 <!DOCTYPE html><html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>NeuroXTon Game</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroXTon Mini App</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f0f0f;
-      color: #fff;
-      overflow-x: hidden;
-    }header {
-  display: none; /* Телеграм сам отображает заголовки */
-}
-
-nav {
-  display: flex;
-  justify-content: space-around;
-  background: #1c1c1c;
-  padding: 0.5rem 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid #333;
-  z-index: 1000;
-}
-
-nav a {
-  color: #66fcf1;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-section {
-  padding: 1rem;
-  display: none;
-  min-height: calc(100vh - 56px);
-}
-
-section.active {
-  display: block;
-}
-
-.token-display {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.token-display h2 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  color: gold;
-}
-
-.rank {
-  font-size: 1.2rem;
-  color: #aaa;
-}
-
-.energy-bar {
-  width: 90%;
-  margin: 1rem auto;
-  height: 10px;
-  background: #333;
-  border-radius: 5px;
-}
-
-.energy-fill {
-  height: 100%;
-  background: #ffd700;
-  border-radius: 5px;
-  width: 80%;
-}
-
-.profile {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.profile img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2px solid #66fcf1;
-}
-
-.grok-companion {
-  background: #1a1a1a;
-  border-radius: 12px;
-  padding: 1rem;
-  margin: 1rem 0;
-}
-
-.grok-companion h3 {
-  margin-top: 0;
-  color: #66fcf1;
-}
-
-.grok-companion ul {
-  padding-left: 1.2rem;
-}
-
-button {
-  background: #66fcf1;
-  color: #000;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.leaderboard {
-  margin-top: 2rem;
-}
-
-.leaderboard li {
-  padding: 0.3rem;
-}
-
+      background-color: #0e0f12;
+      font-family: 'Segoe UI', sans-serif;
+      color: #f8f8f8;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #15171c;
+      border-top: 1px solid #2a2a2a;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 10px 0;
+      z-index: 100;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    nav button.active {
+      color: #00ffe0;
+      font-weight: bold;
+    }
+    section {
+      padding: 20px;
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    .level {
+      background: #1a1c22;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    .roadmap-block {
+      background: #1c1e26;
+      border-left: 4px solid #00ffe0;
+      padding: 12px 16px;
+      margin: 12px 0;
+      border-radius: 8px;
+    }
+    .emoji {
+      font-size: 1.2em;
+      margin-right: 6px;
+    }
   </style>
 </head>
-<body>  <section id="game" class="active">
-    <div class="profile">
-      <img src="https://i.imgur.com/DFRMU3W.png" alt="avatar" />
-      <h2>Игрок</h2>
-    </div>
-    <div class="token-display">
-      <h2 id="tokenBalance">0</h2>
-      <div class="rank" id="rankLabel">RANK: Bronze</div>
-    </div>
-    <div class="energy-bar">
-      <div class="energy-fill"></div>
-    </div>
-    <div style="text-align:center">
-      <button onclick="incrementScore()">Кликни!</button>
-    </div>
-    <div class="grok-companion">
-      <h3>🤖 AI-Компаньон: Grok</h3>
-      <ul>
-        <li>AI-настройка сложности</li>
-        <li>Умный советник в реальном времени</li>
-        <li>Диалог голосом или текстом</li>
-        <li>AI-анти-чит и награды</li>
-        <li>Будущий анализ рынка NXT</li>
-      </ul>
-    </div>
-    <div class="leaderboard">
-      <h3>🏆 Лидерборд</h3>
-      <ol id="leaderboardList"></ol>
-    </div>
-  </section>  <section id="wallet">
-    <h2>🔗 Подключение</h2>
-    <p>Интеграция с Tonkeeper появится в ближайших обновлениях.</p>
-    <button onclick="connectWallet()">Подключить</button>
-  </section>  <section id="about">
-    <h2>О NeuroXTon</h2>
-    <p>Web3-игра с AI-ядром от Grok. Персонализация, челленджи и награды. Сообщество строит ценность. </p>
-  </section>  <section id="roadmap">
-    <h2>📈 Дорожная карта</h2>
-    <ul>
-      <li><strong>$100K</strong> — запуск AI-игры</li>
-      <li><strong>$250K</strong> — Lockdrop, дропы, PvE</li>
-      <li><strong>$500K</strong> — AI миссии, маркетплейс</li>
-      <li><strong>$750K</strong> — сюжетный режим, DAO</li>
-      <li><strong>$1M+</strong> — Метавселенная, PvP, мобильное приложение</li>
-    </ul>
-  </section>  <nav>
-    <a href="#game" onclick="showTab('game')">Игра</a>
-    <a href="#wallet" onclick="showTab('wallet')">Кошелёк</a>
-    <a href="#about" onclick="showTab('about')">О нас</a>
-    <a href="#roadmap" onclick="showTab('roadmap')">Карта</a>
-  </nav>  <script>
-    let tokenBalance = 0;
-    let leaderboard = [];
-
-    function incrementScore() {
-      tokenBalance++;
-      document.getElementById("tokenBalance").textContent = tokenBalance;
-      updateRank();
-      updateLeaderboard("Вы", tokenBalance);
-    }
-
-    function updateRank() {
-      let rank = "Bronze";
-      if (tokenBalance >= 1000000) rank = "Bronze";
-      if (tokenBalance >= 5000000) rank = "Silver";
-      if (tokenBalance >= 10000000) rank = "Gold";
-      if (tokenBalance >= 25000000) rank = "Diamond";
-      if (tokenBalance >= 50000000) rank = "Legendary";
-      document.getElementById("rankLabel").textContent = `RANK: ${rank}`;
-    }
-
-    function updateLeaderboard(name, score) {
-      const entry = leaderboard.find(e => e.name === name);
-      if (entry) {
-        entry.score = score;
-      } else {
-        leaderboard.push({ name, score });
-      }
-      leaderboard.sort((a, b) => b.score - a.score);
-      const list = document.getElementById("leaderboardList");
-      list.innerHTML = "";
-      leaderboard.forEach(entry => {
-        const li = document.createElement("li");
-        li.textContent = `${entry.name}: ${entry.score}`;
-        list.appendChild(li);
-      });
-    }
-
-    function connectWallet() {
-      alert("Интеграция скоро будет доступна");
-    }
-
-    function showTab(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
-  </script></body>
+<body><section id="game" class="active">
+  <h2>🎮 Игра</h2>
+  <div class="level">🥉 Bronze — 1,000,000 монет</div>
+  <div class="level">🥈 Silver — 5,000,000 монет</div>
+  <div class="level">🥇 Gold — 10,000,000 монет</div>
+  <div class="level">💎 Diamond — 25,000,000 монет</div>
+  <div class="level">🚀 Legendary — 50,000,000 монет</div>
+</section><section id="roadmap">
+  <h2>🛣️ Дорожная карта</h2>
+  <div class="roadmap-block">
+    <strong>🔹 $100K+ — Старт</strong>
+    <p>🚀 Запуск игры с Grok AI<br>🎁 Первый AI-дроп<br>📊 Публичный дешборд<br>🎮 Тест-квесты и награды</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $250K+ — Активация</strong>
+    <p>🔒 Lockdrop с OG-наградами<br>🌱 Альфа-версия AI-стейкинга<br>⚔️ PvE-сражения с интеллектом<br>🪂 Комьюнити-дроп<br>🎥 Web3-инфлюенсеры</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $500K+ — Расширение</strong>
+    <p>🧠 AI-сгенерированные миссии<br>🛍 Маркетплейс на TON<br>📈 AI-ассистент для анализа NXT<br>🎮 Умный стейкинг с геймификацией<br>🌍 Интернациональные сообщества<br>🤝 Интеграции с TON-проектами</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $750K+ — Ускорение</strong>
+    <p>📜 Сюжетный AI-режим “Campaign”<br>🗳 DAO-голосования<br>👤 Прокачка AI-профилей игроков<br>🏆 NFT-дропы редких предметов<br>🏦 Подключение к DeFi-продуктам TON</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $1M+ — Раскрытие потенциала</strong>
+    <p>🌌 Метавселенная NeuroXTon<br>📲 Мобильное приложение<br>⚔️ PvP-арены с Grok AI<br>🔄 AI-контракты для трейдинга<br>🧬 Комьюнити-лаборатория</p>
+  </div>
+</section><section id="profile">
+  <h2>👤 Профиль</h2>
+  <p>Уровень: 🥈 Silver</p>
+  <p>Баланс: 5,250,000 монет</p>
+  <p>Опыт: 11200 XP</p>
+  <p>GROK-компаньон активен 🤖</p>
+</section><section id="wallet">
+  <h2>💼 Кошелёк</h2>
+  <p>Адрес: <code>EQC...XYZ</code></p>
+  <p>Стейкинг: 1,000,000 NXT</p>
+  <p>Награды: 3,200 NXT</p>
+</section><nav>
+  <button onclick="switchTab('game')" class="active">🎮 Игра</button>
+  <button onclick="switchTab('roadmap')">🛣️ Roadmap</button>
+  <button onclick="switchTab('profile')">👤 Профиль</button>
+  <button onclick="switchTab('wallet')">💼 Кошелёк</button>
+</nav><script>
+  function switchTab(tabId) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script></body>
 </html>
