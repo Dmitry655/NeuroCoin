@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NeuroXTon</title>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -106,7 +106,6 @@
       <a href="#future" onclick="showTab('future')">🚀 Будущее</a>
     </nav>
   </header>
-
   <section id="main" class="active">
     <h2>💰 Зарабатывай NXT</h2>
     <div class="token-display">
@@ -135,8 +134,8 @@
 
   <section id="wallet">
     <h2>🔐 Подключение к Tonkeeper</h2>
-    <button onclick="connectWallet()">Подключиться к Tonkeeper</button>
-    <p id="walletAddress"></p>
+    <button onclick="connectWallet()">Подключиться</button>
+    <div id="walletAddress"></div>
   </section>
 
   <section id="about">
@@ -145,9 +144,10 @@
   </section>
 
   <section id="roadmap">
-    <h2>🛤️ Дорожная карта</h2>
+    <h2>🛤️ NEUROXTON ROAD: ПУТЬ К СИЛЕ</h2>
+    <p>Token. AI. Game. Community.</p>
     <ul>
-      <li>🔷 <strong>$100K+ — Старт</strong>
+      <li>🔹 <strong>$100K+ — Старт</strong>
         <ul>
           <li>🚀 Запуск игры с Grok AI</li>
           <li>🎁 Первый AI-дроп</li>
@@ -155,35 +155,50 @@
           <li>🎮 Тест-квесты и награды</li>
         </ul>
       </li>
-      <li>🔷 <strong>$250K+ — Активация</strong>
+      <li>🔹 <strong>$250K+ — Активация</strong>
         <ul>
           <li>🔒 Lockdrop с OG-наградами</li>
-          <li>🌱 Альфа AI-стейкинга</li>
+          <li>🌱 Альфа-версия AI-стейкинга</li>
           <li>⚔️ PvE-сражения с интеллектом</li>
-          <li>🎈 Комьюнити-дроп</li>
+          <li>🪂 Комьюнити-дроп</li>
           <li>🎥 Web3-инфлюенсеры</li>
         </ul>
       </li>
-      <li>🔷 <strong>$500K+ — Расширение</strong>
+      <li>🔹 <strong>$500K+ — Расширение</strong>
         <ul>
           <li>🧠 AI-сгенерированные миссии</li>
-          <li>🛍️ Маркетплейс на TON</li>
-          <li>📈 AI-ассистент по NXT</li>
+          <li>🛍 Маркетплейс на TON</li>
+          <li>📈 AI-ассистент для анализа NXT</li>
           <li>🎮 Умный стейкинг с геймификацией</li>
+          <li>🌍 Интернациональные сообщества</li>
+          <li>🤝 Интеграции с TON-проектами</li>
+        </ul>
+      </li>
+      <li>🔹 <strong>$750K+ — Ускорение</strong>
+        <ul>
+          <li>📜 Сюжетный AI-режим “Campaign”</li>
+          <li>🗳 DAO-голосования</li>
+          <li>👤 Прокачка AI-профилей игроков</li>
+          <li>🏆 NFT-дропы редких предметов</li>
+          <li>🏦 Подключение к DeFi-продуктам TON</li>
+        </ul>
+      </li>
+      <li>🔹 <strong>$1M+ — Раскрытие потенциала</strong>
+        <ul>
+          <li>🌌 Метавселенная NeuroXTon</li>
+          <li>📲 Мобильное приложение</li>
+          <li>⚔️ PvP-арены с Grok AI</li>
+          <li>🔄 AI-контракты для трейдинга</li>
+          <li>🧬 Комьюнити-лаборатория: выдвигай — Grok реализует</li>
         </ul>
       </li>
     </ul>
+    <p>🛸 и кое-что ещё… Когда всё будет готово — 📢 Листинг на CEX. ⏳ Не по графику. По смыслу.</p>
   </section>
 
   <section id="future">
     <h2>🚀 Будущее</h2>
-    <ul>
-      <li>🌌 Метавселенная NXT</li>
-      <li>🤖 Полноправный Grok AI для трейдинга</li>
-      <li>📱 Мобильное приложение</li>
-      <li>🏆 PvP-сражения с AI</li>
-      <li>🗳️ Децентрализованное DAO-управление</li>
-    </ul>
+    <p>NeuroXTon готовится к выходу на новые рынки, добавлению новых AI-функций, поддержке NFT и DeFi-интеграций, а также к выпуску мобильного приложения и метавселенной.</p>
   </section>
 
   <script>
@@ -192,20 +207,16 @@
       tokenBalance++;
       document.getElementById("tokenBalance").textContent = tokenBalance;
     }
-
-    const tonConnect = new TON_CONNECT.TonConnect({
-      manifestUrl: 'https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json'
-    });
-
     async function connectWallet() {
+      const tonConnect = new TON_CONNECT.TonConnect();
+      await tonConnect.restoreConnection();
       try {
-        const connectedWallet = await tonConnect.connectWallet();
-        document.getElementById('walletAddress').textContent = 'Адрес: ' + connectedWallet.account.address;
-      } catch (error) {
-        alert('Ошибка подключения: ' + error);
+        const wallet = await tonConnect.connect();
+        document.getElementById("walletAddress").innerText = 'Адрес: ' + wallet.account.address;
+      } catch (e) {
+        alert("Не удалось подключиться: " + e.message);
       }
     }
-
     function showTab(id) {
       document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
