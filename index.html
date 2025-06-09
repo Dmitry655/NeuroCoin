@@ -1,100 +1,113 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroXTon Game</title>
+  <title>NeuroXTon Mini App</title>
   <style>
     body {
-      background: radial-gradient(#0a0a0a, #1a1a1a);
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 20px;
       margin: 0;
-    }h1 {
-  font-size: 2em;
-  margin-bottom: 0.5em;
-}
-
-#clicker-container {
-  margin: 20px auto;
-  width: 200px;
-  height: 200px;
-  background: url('https://i.imgur.com/tzV3zO7.png') no-repeat center center;
-  background-size: contain;
-  cursor: pointer;
-  position: relative;
-}
-
-#level-display {
-  margin-top: 10px;
-  font-size: 1.2em;
-}
-
-#progress-bar {
-  margin: 20px auto;
-  width: 80%;
-  background: #333;
-  border-radius: 10px;
-  overflow: hidden;
-  height: 20px;
-}
-
-#progress {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #00f0ff, #9f00ff);
-  transition: width 0.5s ease;
-}
-
-.level {
-  font-size: 1em;
-  margin-top: 5px;
-}
-
+      background-color: #0e0f12;
+      font-family: 'Segoe UI', sans-serif;
+      color: #f8f8f8;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #15171c;
+      border-top: 1px solid #2a2a2a;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 10px 0;
+      z-index: 100;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    nav button.active {
+      color: #00ffe0;
+      font-weight: bold;
+    }
+    section {
+      padding: 20px;
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    .level {
+      background: #1a1c22;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    .roadmap-block {
+      background: #1c1e26;
+      border-left: 4px solid #00ffe0;
+      padding: 12px 16px;
+      margin: 12px 0;
+      border-radius: 8px;
+    }
+    .emoji {
+      font-size: 1.2em;
+      margin-right: 6px;
+    }
   </style>
 </head>
-<body>  <h1>🤖 NeuroXTon Clicker</h1>
-  <div id="clicker-container" onclick="handleClick()"></div>
-  <div id="level-display">🥉 Bronze — 0 / 1,000,000</div>
-  <div id="progress-bar">
-    <div id="progress"></div>
-  </div>  <script>
-    let totalCoins = 0;
-
-    const levels = [
-      { name: "Bronze", max: 1000000, emoji: "🥉" },
-      { name: "Silver", max: 5000000, emoji: "🥈" },
-      { name: "Gold", max: 10000000, emoji: "🥇" },
-      { name: "Diamond", max: 25000000, emoji: "💎" },
-      { name: "Legendary", max: 50000000, emoji: "🦾" }
-    ];
-
-    function handleClick() {
-      totalCoins += 1000;
-      updateProgress();
-    }
-
-    function updateProgress() {
-      let currentLevel = levels[0];
-      let nextLevelMax = levels[0].max;
-
-      for (let i = 0; i < levels.length; i++) {
-        if (totalCoins >= levels[i].max) {
-          currentLevel = levels[i];
-          nextLevelMax = levels[i + 1] ? levels[i + 1].max : levels[i].max;
-        } else {
-          break;
-        }
-      }
-
-      const levelDisplay = document.getElementById("level-display");
-      levelDisplay.textContent = `${currentLevel.emoji} ${currentLevel.name} — ${totalCoins.toLocaleString()} / ${nextLevelMax.toLocaleString()}`;
-
-      const progress = Math.min((totalCoins - currentLevel.max) / (nextLevelMax - currentLevel.max), 1);
-      document.getElementById("progress").style.width = `${progress * 100}%`;
-    }
-
-    updateProgress();
-  </script></body>
+<body><section id="game" class="active">
+  <h2>🎮 Игра</h2>
+  <div class="level">🥉 Bronze — 1,000,000 монет</div>
+  <div class="level">🥈 Silver — 5,000,000 монет</div>
+  <div class="level">🥇 Gold — 10,000,000 монет</div>
+  <div class="level">💎 Diamond — 25,000,000 монет</div>
+  <div class="level">🚀 Legendary — 50,000,000 монет</div>
+</section><section id="roadmap">
+  <h2>🛣️ Дорожная карта</h2>
+  <div class="roadmap-block">
+    <strong>🔹 $100K+ — Старт</strong>
+    <p>🚀 Запуск игры с Grok AI<br>🎁 Первый AI-дроп<br>📊 Публичный дешборд<br>🎮 Тест-квесты и награды</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $250K+ — Активация</strong>
+    <p>🔒 Lockdrop с OG-наградами<br>🌱 Альфа-версия AI-стейкинга<br>⚔️ PvE-сражения с интеллектом<br>🪂 Комьюнити-дроп<br>🎥 Web3-инфлюенсеры</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $500K+ — Расширение</strong>
+    <p>🧠 AI-сгенерированные миссии<br>🛍 Маркетплейс на TON<br>📈 AI-ассистент для анализа NXT<br>🎮 Умный стейкинг с геймификацией<br>🌍 Интернациональные сообщества<br>🤝 Интеграции с TON-проектами</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $750K+ — Ускорение</strong>
+    <p>📜 Сюжетный AI-режим “Campaign”<br>🗳 DAO-голосования<br>👤 Прокачка AI-профилей игроков<br>🏆 NFT-дропы редких предметов<br>🏦 Подключение к DeFi-продуктам TON</p>
+  </div>
+  <div class="roadmap-block">
+    <strong>🔹 $1M+ — Раскрытие потенциала</strong>
+    <p>🌌 Метавселенная NeuroXTon<br>📲 Мобильное приложение<br>⚔️ PvP-арены с Grok AI<br>🔄 AI-контракты для трейдинга<br>🧬 Комьюнити-лаборатория</p>
+  </div>
+</section><section id="profile">
+  <h2>👤 Профиль</h2>
+  <p>Уровень: 🥈 Silver</p>
+  <p>Баланс: 5,250,000 монет</p>
+  <p>Опыт: 11200 XP</p>
+  <p>GROK-компаньон активен 🤖</p>
+</section><section id="wallet">
+  <h2>💼 Кошелёк</h2>
+  <p>Адрес: <code>EQC...XYZ</code></p>
+  <p>Стейкинг: 1,000,000 NXT</p>
+  <p>Награды: 3,200 NXT</p>
+</section><nav>
+  <button onclick="switchTab('game')" class="active">🎮 Игра</button>
+  <button onclick="switchTab('roadmap')">🛣️ Roadmap</button>
+  <button onclick="switchTab('profile')">👤 Профиль</button>
+  <button onclick="switchTab('wallet')">💼 Кошелёк</button>
+</nav><script>
+  function switchTab(tabId) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script></body>
 </html>
