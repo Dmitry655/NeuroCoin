@@ -3,58 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroXTon — Game Interface</title>
+  <title>NeuroXTon</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(145deg, #0b0c10, #1f2833);
-      color: #fff;
+      background: #0b0c10;
+      color: #ffffff;
     }
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: #1f2833;
       padding: 1rem;
-      background: rgba(15, 20, 30, 0.85);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .wallet-btn {
-      background: #45a29e;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #0b0c10;
-      font-weight: bold;
-    }
-    .wallet-btn:hover {
-      background: #66fcf1;
-    }
-    .balance-display {
       text-align: center;
-      margin-top: 2rem;
-    }
-    .balance-display img {
-      width: 80px;
-      animation: spin 4s linear infinite;
-    }
-    @keyframes spin {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
-    }
-    .balance-number {
-      font-size: 2rem;
-      margin-top: 1rem;
-    }
-    nav {
-      text-align: center;
-      margin: 1rem 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
     nav a {
       margin: 0 1rem;
-      text-decoration: none;
       color: #66fcf1;
+      text-decoration: none;
       font-weight: bold;
     }
     nav a:hover {
@@ -62,111 +28,118 @@
     }
     section {
       display: none;
-      padding: 1rem;
-      max-width: 600px;
-      margin: 0 auto;
-      background: rgba(0,0,0,0.5);
-      border-radius: 12px;
-      box-shadow: 0 0 10px #66fcf1;
+      padding: 2rem;
     }
-    section.active { display: block; }
-    h2 { text-align: center; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 0.5rem 0; }
+    section.active {
+      display: block;
+    }
+    .wallet {
+      background: #1f2833;
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1rem auto;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 12px rgba(102, 252, 241, 0.4);
+    }
+    .balance {
+      font-size: 2rem;
+      margin-top: 1rem;
+    }
+    .roadmap, .future {
+      background: #1f2833;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(102, 252, 241, 0.3);
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    .emoji {
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>NeuroXTon 💠</h1>
-    <button class="wallet-btn" onclick="connectWallet()">🔗 Подключить Tonkeeper</button>
+    <h1>NeuroXTon</h1>
+    <nav>
+      <a href="#wallet" onclick="showTab('wallet')">Wallet</a>
+      <a href="#roadmap" onclick="showTab('roadmap')">Дорожная карта</a>
+      <a href="#future" onclick="showTab('future')">Будущее</a>
+    </nav>
   </header>
 
-  <div class="balance-display">
-    <img src="nxt_coin.png" alt="NXT Coin">
-    <div class="balance-number">💰 Баланс: <span id="tokenBalance">0</span> NXT</div>
-  </div>
+  <section id="wallet" class="active">
+    <div class="wallet">
+      <h2>🔐 Tonkeeper Wallet</h2>
+      <button onclick="connectWallet()">Подключиться</button>
+      <div class="balance">💰 Баланс: <span id="tokenBalance">0</span> NXT</div>
+    </div>
+  </section>
 
-  <nav>
-    <a href="#roadmap" onclick="showTab('roadmap')">🎯 Дорожная карта</a>
-    <a href="#future" onclick="showTab('future')">🚀 Будущее</a>
-  </nav>
-
-  <section id="roadmap" class="active">
-    <h2>🎯 NEUROXTON ROAD: ПУТЬ К СИЛЕ</h2>
-    <p>Token. AI. Game. Community.</p>
-    <ul>
-      <li>🔹 $100K+ — Старт
-        <ul>
-          <li>🚀 Запуск игры с Grok AI</li>
-          <li>🎁 Первый AI-дроп</li>
-          <li>📊 Публичный дешборд</li>
-          <li>🎮 Тест-квесты и награды</li>
-        </ul>
-      </li>
-      <li>🔹 $250K+ — Активация
-        <ul>
-          <li>🔒 Lockdrop с OG-наградами</li>
-          <li>🌱 Альфа-версия AI-стейкинга</li>
-          <li>⚔️ PvE-сражения с интеллектом</li>
-          <li>🪂 Комьюнити-дроп</li>
-          <li>🎥 Web3-инфлюенсеры</li>
-        </ul>
-      </li>
-      <li>🔹 $500K+ — Расширение
-        <ul>
-          <li>🧠 AI-сгенерированные миссии</li>
-          <li>🛍 Маркетплейс на TON</li>
-          <li>📈 AI-ассистент для анализа NXT</li>
-          <li>🎮 Умный стейкинг с геймификацией</li>
-          <li>🌍 Интернациональные сообщества</li>
-          <li>🤝 Интеграции с TON-проектами</li>
-        </ul>
-      </li>
-      <li>🔹 $750K+ — Ускорение
-        <ul>
-          <li>📜 Сюжетный AI-режим “Campaign”</li>
-          <li>🗳 DAO-голосования</li>
-          <li>👤 Прокачка AI-профилей игроков</li>
-          <li>🏆 NFT-дропы редких предметов</li>
-          <li>🏦 Подключение к DeFi-продуктам TON</li>
-        </ul>
-      </li>
-      <li>🔹 $1M+ — Раскрытие потенциала
-        <ul>
-          <li>🌌 Метавселенная NeuroXTon</li>
-          <li>📲 Мобильное приложение</li>
-          <li>⚔️ PvP-арены с Grok AI</li>
-          <li>🔄 AI-контракты для трейдинга</li>
-          <li>🧬 Комьюнити-лаборатория</li>
-        </ul>
-      </li>
-    </ul>
+  <section id="roadmap">
+    <div class="roadmap">
+      <h2>🎯 NEUROXTON ROAD: ПУТЬ К СИЛЕ</h2>
+      <p>Token. AI. Game. Community.</p>
+      <h3>🔹 $100K+ — Старт</h3>
+      <ul>
+        <li>🚀 Запуск игры с Grok AI</li>
+        <li>🎁 Первый AI-дроп</li>
+        <li>📊 Публичный дешборд</li>
+        <li>🎮 Тест-квесты и награды</li>
+      </ul>
+      <h3>🔹 $250K+ — Активация</h3>
+      <ul>
+        <li>🔒 Lockdrop с OG-наградами</li>
+        <li>🌱 Альфа-версия AI-стейкинга</li>
+        <li>⚔️ PvE-сражения с интеллектом</li>
+        <li>🪂 Комьюнити-дроп</li>
+        <li>🎥 Web3-инфлюенсеры</li>
+      </ul>
+      <h3>🔹 $500K+ — Расширение</h3>
+      <ul>
+        <li>🧠 AI-сгенерированные миссии</li>
+        <li>🛍 Маркетплейс на TON</li>
+        <li>📈 AI-ассистент для анализа NXT</li>
+        <li>🎮 Умный стейкинг с геймификацией</li>
+        <li>🌍 Интернациональные сообщества</li>
+        <li>🤝 Интеграции с TON-проектами</li>
+      </ul>
+      <h3>🔹 $750K+ — Ускорение</h3>
+      <ul>
+        <li>📜 Сюжетный AI-режим “Campaign”</li>
+        <li>🗳 DAO-голосования</li>
+        <li>👤 Прокачка AI-профилей игроков</li>
+        <li>🏆 NFT-дропы редких предметов</li>
+        <li>🏦 Подключение к DeFi-продуктам TON</li>
+      </ul>
+      <h3>🔹 $1M+ — Раскрытие потенциала</h3>
+      <ul>
+        <li>🌌 Метавселенная NeuroXTon</li>
+        <li>📲 Мобильное приложение</li>
+        <li>⚔️ PvP-арены с Grok AI</li>
+        <li>🔄 AI-контракты для трейдинга</li>
+        <li>🧬 Комьюнити-лаборатория: выдвигай — Grok реализует</li>
+      </ul>
+      <p>🛸 и кое-что ещё…<br>📢 Листинг на CEX.⏳ Не по графику. По смыслу.</p>
+    </div>
   </section>
 
   <section id="future">
-    <h2>🚀 Будущее NeuroXTon</h2>
-    <ul>
-      <li>⚡ Полная интеграция с Tonkeeper</li>
-      <li>🎮 Релиз PvE и PvP с AI</li>
-      <li>🌐 Запуск метавселенной</li>
-      <li>🪙 Запуск стейкинга на основе AI</li>
-      <li>💡 DAO-управление проектом</li>
-      <li>🛍 NFT-маркетплейс в сети TON</li>
-    </ul>
+    <div class="future">
+      <h2>🚀 Будущее NeuroXTon</h2>
+      <p>NeuroXTon — это будущее Web3 игр, AI и токенизации. Скоро: новые AI-механики, DeFi-решения и метавселенная для всех участников.</p>
+    </div>
   </section>
 
   <script>
     let tokenBalance = 0;
-    function incrementBalance() {
-      tokenBalance += 100;
-      document.getElementById('tokenBalance').textContent = tokenBalance;
-    }
     function connectWallet() {
-      alert("🚧 Подключение к Tonkeeper скоро будет доступно.");
+      alert("Подключение к Tonkeeper в разработке...");
     }
-    function showTab(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function showTab(tab) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
     }
   </script>
 </body>
