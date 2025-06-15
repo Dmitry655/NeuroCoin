@@ -1,197 +1,173 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroX</title>
+  <title>NeuroXTon — Game Interface</title>
   <style>
-    :root {
-      --primary-color: #00bfff;
-      --accent-color: #7b2ff7;
-      --bg-color: #0e0e1a;
-      --text-color: #ffffff;
-      --card-bg: #1a1a2e;
-    }
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(145deg, #0b0c10, #1f2833);
+      color: #fff;
+    }
+    header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      min-height: 100vh;
+      padding: 1rem;
+      background: rgba(15, 20, 30, 0.85);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    h1 {
-      margin: 20px 0 10px;
-      font-size: 28px;
-      color: var(--primary-color);
-    }
-    #coin {
-      width: 150px;
-      height: 150px;
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Gold_coin_icon.png/600px-Gold_coin_icon.png");
-      background-size: cover;
-      background-position: center;
-      margin: 20px;
+    .wallet-btn {
+      background: #45a29e;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
       cursor: pointer;
-      transition: transform 0.1s;
+      color: #0b0c10;
+      font-weight: bold;
     }
-    #coin:active {
-      transform: scale(0.95);
+    .wallet-btn:hover {
+      background: #66fcf1;
     }
-    #counter {
-      font-size: 22px;
-      margin: 10px 0;
-    }
-    #levelBar {
-      width: 80%;
-      height: 20px;
-      background: #333;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    #levelFill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-      transition: width 0.3s;
-    }
-    .tabs {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      background: #111;
-      padding: 10px 0;
-      border-top: 1px solid #222;
-    }
-    .tab {
-      color: var(--text-color);
+    .balance-display {
       text-align: center;
-      flex: 1;
-      font-size: 14px;
-      cursor: pointer;
+      margin-top: 2rem;
     }
-    .tab.active {
-      color: var(--primary-color);
+    .balance-display img {
+      width: 80px;
+      animation: spin 4s linear infinite;
     }
-    .screen {
+    @keyframes spin {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+    .balance-number {
+      font-size: 2rem;
+      margin-top: 1rem;
+    }
+    nav {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #66fcf1;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
       display: none;
-      width: 100%;
-      padding: 20px;
-      max-width: 500px;
-    }
-    .screen.active {
-      display: block;
-    }
-    .card {
-      background: var(--card-bg);
+      padding: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.5);
       border-radius: 12px;
-      padding: 15px;
-      margin: 10px 0;
-      box-shadow: 0 0 10px #0006;
+      box-shadow: 0 0 10px #66fcf1;
     }
-    .wallet-address {
-      font-size: 12px;
-      color: #bbb;
-      word-break: break-word;
-    }
+    section.active { display: block; }
+    h2 { text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 0.5rem 0; }
   </style>
 </head>
 <body>
-  <h1>NeuroX</h1>
+  <header>
+    <h1>NeuroXTon 💠</h1>
+    <button class="wallet-btn" onclick="connectWallet()">🔗 Подключить Tonkeeper</button>
+  </header>
 
-  <div id="main" class="screen active">
-    <div id="coin"></div>
-    <div id="counter">Монет: 0</div>
-    <div id="levelBar"><div id="levelFill"></div></div>
+  <div class="balance-display">
+    <img src="nxt_coin.png" alt="NXT Coin">
+    <div class="balance-number">💰 Баланс: <span id="tokenBalance">0</span> NXT</div>
   </div>
 
-  <div id="friends" class="screen">
-    <div class="card">
-      <h3>Приглашай друзей</h3>
-      <p>За каждого друга — +100 монет</p>
-      <input type="text" readonly value="https://t.me/your_bot?start=ref123" style="width: 100%; margin-top: 10px;">
-    </div>
-  </div>
+  <nav>
+    <a href="#roadmap" onclick="showTab('roadmap')">🎯 Дорожная карта</a>
+    <a href="#future" onclick="showTab('future')">🚀 Будущее</a>
+  </nav>
 
-  <div id="earn" class="screen">
-    <div class="card">Ежедневный бонус: +50 монет</div>
-    <div class="card">За вступление в канал: +150 монет</div>
-    <div class="card">За репост: +75 монет</div>
-  </div>
+  <section id="roadmap" class="active">
+    <h2>🎯 NEUROXTON ROAD: ПУТЬ К СИЛЕ</h2>
+    <p>Token. AI. Game. Community.</p>
+    <ul>
+      <li>🔹 $100K+ — Старт
+        <ul>
+          <li>🚀 Запуск игры с Grok AI</li>
+          <li>🎁 Первый AI-дроп</li>
+          <li>📊 Публичный дешборд</li>
+          <li>🎮 Тест-квесты и награды</li>
+        </ul>
+      </li>
+      <li>🔹 $250K+ — Активация
+        <ul>
+          <li>🔒 Lockdrop с OG-наградами</li>
+          <li>🌱 Альфа-версия AI-стейкинга</li>
+          <li>⚔️ PvE-сражения с интеллектом</li>
+          <li>🪂 Комьюнити-дроп</li>
+          <li>🎥 Web3-инфлюенсеры</li>
+        </ul>
+      </li>
+      <li>🔹 $500K+ — Расширение
+        <ul>
+          <li>🧠 AI-сгенерированные миссии</li>
+          <li>🛍 Маркетплейс на TON</li>
+          <li>📈 AI-ассистент для анализа NXT</li>
+          <li>🎮 Умный стейкинг с геймификацией</li>
+          <li>🌍 Интернациональные сообщества</li>
+          <li>🤝 Интеграции с TON-проектами</li>
+        </ul>
+      </li>
+      <li>🔹 $750K+ — Ускорение
+        <ul>
+          <li>📜 Сюжетный AI-режим “Campaign”</li>
+          <li>🗳 DAO-голосования</li>
+          <li>👤 Прокачка AI-профилей игроков</li>
+          <li>🏆 NFT-дропы редких предметов</li>
+          <li>🏦 Подключение к DeFi-продуктам TON</li>
+        </ul>
+      </li>
+      <li>🔹 $1M+ — Раскрытие потенциала
+        <ul>
+          <li>🌌 Метавселенная NeuroXTon</li>
+          <li>📲 Мобильное приложение</li>
+          <li>⚔️ PvP-арены с Grok AI</li>
+          <li>🔄 AI-контракты для трейдинга</li>
+          <li>🧬 Комьюнити-лаборатория</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
 
-  <div id="burn" class="screen">
-    <div class="card">
-      <h3>Сжечь монеты</h3>
-      <p>Ускорь переход на следующий уровень</p>
-      <button style="margin-top: 10px">Сжечь 1000 монет</button>
-    </div>
-  </div>
-
-  <div id="wallet" class="screen">
-    <div class="card">
-      <h3>Ваш TON-кошелёк</h3>
-      <p class="wallet-address">EQC5...Yk9a</p>
-      <button style="margin-top: 10px">Отвязать</button>
-    </div>
-    <div class="card">
-      <h3>Баланс</h3>
-      <p>12 450 NRX</p>
-      <button style="margin-top: 10px">Вывести</button>
-    </div>
-  </div>
-
-  <div class="tabs">
-    <div class="tab active" data-tab="main">Home</div>
-    <div class="tab" data-tab="friends">Friends</div>
-    <div class="tab" data-tab="earn">Earn</div>
-    <div class="tab" data-tab="burn">Burn</div>
-    <div class="tab" data-tab="wallet">Wallet</div>
-  </div>
+  <section id="future">
+    <h2>🚀 Будущее NeuroXTon</h2>
+    <ul>
+      <li>⚡ Полная интеграция с Tonkeeper</li>
+      <li>🎮 Релиз PvE и PvP с AI</li>
+      <li>🌐 Запуск метавселенной</li>
+      <li>🪙 Запуск стейкинга на основе AI</li>
+      <li>💡 DAO-управление проектом</li>
+      <li>🛍 NFT-маркетплейс в сети TON</li>
+    </ul>
+  </section>
 
   <script>
-    const LEVEL_STEP = 50000;
-    let count = parseInt(localStorage.getItem('coinCount')) || 0;
-    const coin = document.getElementById('coin');
-    const counter = document.getElementById('counter');
-    const levelFill = document.getElementById('levelFill');
-
-    function updateUI() {
-      const level = Math.floor(count / LEVEL_STEP) + 1;
-      const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
-      counter.innerText = `Монет: ${count} (уровень ${level})`;
-      levelFill.style.width = progress + '%';
+    let tokenBalance = 0;
+    function incrementBalance() {
+      tokenBalance += 100;
+      document.getElementById('tokenBalance').textContent = tokenBalance;
     }
-
-    coin.addEventListener('click', () => {
-      count++;
-      localStorage.setItem('coinCount', count);
-      updateUI();
-    });
-
-    const tabs = document.querySelectorAll('.tab');
-    const screens = document.querySelectorAll('.screen');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        screens.forEach(s => s.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
-    });
-
-    if (window.Telegram && Telegram.WebApp) {
-      Telegram.WebApp.expand();
+    function connectWallet() {
+      alert("🚧 Подключение к Tonkeeper скоро будет доступно.");
     }
-
-    updateUI();
+    function showTab(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
   </script>
 </body>
 </html>
