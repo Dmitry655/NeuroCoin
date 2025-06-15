@@ -3,224 +3,195 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroXTon</title>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect.min.js"></script>
+  <title>NeuroX</title>
   <style>
+    :root {
+      --primary-color: #00bfff;
+      --accent-color: #7b2ff7;
+      --bg-color: #0e0e1a;
+      --text-color: #ffffff;
+      --card-bg: #1a1a2e;
+    }
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0b0c10 url('grok_clean.png') no-repeat center center / cover;
-      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
-    header {
-      background: rgba(15, 20, 30, 0.85);
-      padding: 1rem;
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 28px;
+      color: var(--primary-color);
+    }
+    #coin {
+      width: 150px;
+      height: 150px;
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Gold_coin_icon.png/600px-Gold_coin_icon.png");
+      background-size: cover;
+      background-position: center;
+      margin: 20px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    #coin:active {
+      transform: scale(0.95);
+    }
+    #counter {
+      font-size: 22px;
+      margin: 10px 0;
+    }
+    #levelBar {
+      width: 80%;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    #levelFill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      transition: width 0.3s;
+    }
+    .tabs {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: #111;
+      padding: 10px 0;
+      border-top: 1px solid #222;
+    }
+    .tab {
+      color: var(--text-color);
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      flex: 1;
+      font-size: 14px;
+      cursor: pointer;
     }
-    nav a {
-      margin: 0 0.5rem;
-      color: #66fcf1;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
+    .tab.active {
+      color: var(--primary-color);
     }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    section {
-      padding: 1.5rem;
+    .screen {
       display: none;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 12px;
-      margin: 1rem auto;
-      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      max-width: 500px;
     }
-    section.active {
+    .screen.active {
       display: block;
     }
-    button {
-      padding: 0.6rem 1.2rem;
-      margin-top: 1rem;
-      cursor: pointer;
-      background-color: #45a29e;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 1.1rem;
-      box-shadow: 0 0 12px rgba(102, 252, 241, 0.3);
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #66fcf1;
-      color: #0b0c10;
-    }
-    .token-display {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 2rem;
-      gap: 1rem;
-    }
-    .coin-icon {
-      width: 80px;
-      height: 80px;
-      cursor: pointer;
-      animation: spin 3s linear infinite;
-      transition: transform 0.2s;
-    }
-    @keyframes spin {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
-    }
-    .token-balance {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #ffffff;
-    }
-    .levels span {
-      display: inline-block;
-      background: #1f2833;
-      margin: 0.2rem;
-      padding: 0.5rem 0.8rem;
-      border-radius: 8px;
-      color: #66fcf1;
-    }
-    .grok-bot {
-      margin-top: 2rem;
-      background: rgba(18, 23, 28, 0.85);
-      padding: 1rem;
+    .card {
+      background: var(--card-bg);
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: 0 0 10px #0006;
+    }
+    .wallet-address {
+      font-size: 12px;
+      color: #bbb;
+      word-break: break-word;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>NeuroXTon</h1>
-    <nav>
-      <a href="#main" onclick="showTab('main')">🎮 Игра</a>
-      <a href="#wallet" onclick="showTab('wallet')">🔐 Wallet</a>
-      <a href="#about" onclick="showTab('about')">ℹ️ О нас</a>
-      <a href="#roadmap" onclick="showTab('roadmap')">🛤️ Дорожная карта</a>
-      <a href="#future" onclick="showTab('future')">🚀 Будущее</a>
-    </nav>
-  </header>
-  <section id="main" class="active">
-    <h2>💰 Зарабатывай NXT</h2>
-    <div class="token-display">
-      <img src="nxt_coin.png" alt="Монета NXT" class="coin-icon" onclick="incrementScore()" />
-      <div class="token-balance">Ваши токены: <span id="tokenBalance">0</span></div>
+  <h1>NeuroX</h1>
+
+  <div id="main" class="screen active">
+    <div id="coin"></div>
+    <div id="counter">Монет: 0</div>
+    <div id="levelBar"><div id="levelFill"></div></div>
+  </div>
+
+  <div id="friends" class="screen">
+    <div class="card">
+      <h3>Приглашай друзей</h3>
+      <p>За каждого друга — +100 монет</p>
+      <input type="text" readonly value="https://t.me/your_bot?start=ref123" style="width: 100%; margin-top: 10px;">
     </div>
-    <div class="levels">
-      <h3>🏆 Уровни</h3>
-      <span>1M — Bronze</span>
-      <span>5M — Silver</span>
-      <span>10M — Gold</span>
-      <span>25M — Diamond</span>
-      <span>50M — Legendary</span>
+  </div>
+
+  <div id="earn" class="screen">
+    <div class="card">Ежедневный бонус: +50 монет</div>
+    <div class="card">За вступление в канал: +150 монет</div>
+    <div class="card">За репост: +75 монет</div>
+  </div>
+
+  <div id="burn" class="screen">
+    <div class="card">
+      <h3>Сжечь монеты</h3>
+      <p>Ускорь переход на следующий уровень</p>
+      <button style="margin-top: 10px">Сжечь 1000 монет</button>
     </div>
-    <div class="grok-bot">
-      <h3>🤖 Grok AI</h3>
-      <ul>
-        <li>🎮 Генерация квестов</li>
-        <li>💬 Диалог в реальном времени</li>
-        <li>🧠 Адаптивная сложность</li>
-        <li>🛡 AI-анти-чит</li>
-        <li>📈 Анализ токена и трейдинг</li>
-      </ul>
+  </div>
+
+  <div id="wallet" class="screen">
+    <div class="card">
+      <h3>Ваш TON-кошелёк</h3>
+      <p class="wallet-address">EQC5...Yk9a</p>
+      <button style="margin-top: 10px">Отвязать</button>
     </div>
-  </section>
+    <div class="card">
+      <h3>Баланс</h3>
+      <p>12 450 NRX</p>
+      <button style="margin-top: 10px">Вывести</button>
+    </div>
+  </div>
 
-  <section id="wallet">
-    <h2>🔐 Подключение к Tonkeeper</h2>
-    <button onclick="connectWallet()">Подключиться</button>
-    <div id="walletAddress"></div>
-  </section>
-
-  <section id="about">
-    <h2>ℹ️ О нас</h2>
-    <p>NeuroXTon — это токен с идеей, AI и комьюнити. Мы соединяем Web3-игру, интеллект Grok и сообщество.</p>
-  </section>
-
-  <section id="roadmap">
-    <h2>🛤️ NEUROXTON ROAD: ПУТЬ К СИЛЕ</h2>
-    <p>Token. AI. Game. Community.</p>
-    <ul>
-      <li>🔹 <strong>$100K+ — Старт</strong>
-        <ul>
-          <li>🚀 Запуск игры с Grok AI</li>
-          <li>🎁 Первый AI-дроп</li>
-          <li>📊 Публичный дешборд</li>
-          <li>🎮 Тест-квесты и награды</li>
-        </ul>
-      </li>
-      <li>🔹 <strong>$250K+ — Активация</strong>
-        <ul>
-          <li>🔒 Lockdrop с OG-наградами</li>
-          <li>🌱 Альфа-версия AI-стейкинга</li>
-          <li>⚔️ PvE-сражения с интеллектом</li>
-          <li>🪂 Комьюнити-дроп</li>
-          <li>🎥 Web3-инфлюенсеры</li>
-        </ul>
-      </li>
-      <li>🔹 <strong>$500K+ — Расширение</strong>
-        <ul>
-          <li>🧠 AI-сгенерированные миссии</li>
-          <li>🛍 Маркетплейс на TON</li>
-          <li>📈 AI-ассистент для анализа NXT</li>
-          <li>🎮 Умный стейкинг с геймификацией</li>
-          <li>🌍 Интернациональные сообщества</li>
-          <li>🤝 Интеграции с TON-проектами</li>
-        </ul>
-      </li>
-      <li>🔹 <strong>$750K+ — Ускорение</strong>
-        <ul>
-          <li>📜 Сюжетный AI-режим “Campaign”</li>
-          <li>🗳 DAO-голосования</li>
-          <li>👤 Прокачка AI-профилей игроков</li>
-          <li>🏆 NFT-дропы редких предметов</li>
-          <li>🏦 Подключение к DeFi-продуктам TON</li>
-        </ul>
-      </li>
-      <li>🔹 <strong>$1M+ — Раскрытие потенциала</strong>
-        <ul>
-          <li>🌌 Метавселенная NeuroXTon</li>
-          <li>📲 Мобильное приложение</li>
-          <li>⚔️ PvP-арены с Grok AI</li>
-          <li>🔄 AI-контракты для трейдинга</li>
-          <li>🧬 Комьюнити-лаборатория: выдвигай — Grok реализует</li>
-        </ul>
-      </li>
-    </ul>
-    <p>🛸 и кое-что ещё… Когда всё будет готово — 📢 Листинг на CEX. ⏳ Не по графику. По смыслу.</p>
-  </section>
-
-  <section id="future">
-    <h2>🚀 Будущее</h2>
-    <p>NeuroXTon готовится к выходу на новые рынки, добавлению новых AI-функций, поддержке NFT и DeFi-интеграций, а также к выпуску мобильного приложения и метавселенной.</p>
-  </section>
+  <div class="tabs">
+    <div class="tab active" data-tab="main">Home</div>
+    <div class="tab" data-tab="friends">Friends</div>
+    <div class="tab" data-tab="earn">Earn</div>
+    <div class="tab" data-tab="burn">Burn</div>
+    <div class="tab" data-tab="wallet">Wallet</div>
+  </div>
 
   <script>
-    let tokenBalance = 0;
-    function incrementScore() {
-      tokenBalance++;
-      document.getElementById("tokenBalance").textContent = tokenBalance;
+    const LEVEL_STEP = 50000;
+    let count = parseInt(localStorage.getItem('coinCount')) || 0;
+    const coin = document.getElementById('coin');
+    const counter = document.getElementById('counter');
+    const levelFill = document.getElementById('levelFill');
+
+    function updateUI() {
+      const level = Math.floor(count / LEVEL_STEP) + 1;
+      const progress = (count % LEVEL_STEP) / LEVEL_STEP * 100;
+      counter.innerText = `Монет: ${count} (уровень ${level})`;
+      levelFill.style.width = progress + '%';
     }
-    async function connectWallet() {
-      const tonConnect = new TON_CONNECT.TonConnect();
-      await tonConnect.restoreConnection();
-      try {
-        const wallet = await tonConnect.connect();
-        document.getElementById("walletAddress").innerText = 'Адрес: ' + wallet.account.address;
-      } catch (e) {
-        alert("Не удалось подключиться: " + e.message);
-      }
+
+    coin.addEventListener('click', () => {
+      count++;
+      localStorage.setItem('coinCount', count);
+      updateUI();
+    });
+
+    const tabs = document.querySelectorAll('.tab');
+    const screens = document.querySelectorAll('.screen');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        screens.forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    if (window.Telegram && Telegram.WebApp) {
+      Telegram.WebApp.expand();
     }
-    function showTab(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
+
+    updateUI();
   </script>
 </body>
 </html>
