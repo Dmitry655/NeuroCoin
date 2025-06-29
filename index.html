@@ -1,244 +1,214 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroXTon Game</title>
+  <title>NeuroXTON – AI, Web3 & Real Estate Economy</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0b0c10 url('grok_clean.png') no-repeat center center / cover;
-      color: #ffffff;
+      background-color: #0f0f1c;
+      color: #e2e2e2;
+      text-align: center;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at center, #1a1a2f 0%, #0f0f1c 80%);
     }
     header {
-      background: rgba(15, 20, 30, 0.95);
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      padding: 20px;
+      background-color: rgba(15,15,28,0.8);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      width: 80px;
+      vertical-align: middle;
+    }
+    nav {
+      display: inline-block;
+      margin-left: 20px;
     }
     nav a {
-      margin: 0 0.7rem;
-      color: #66fcf1;
+      color: #e2e2e2;
+      margin: 0 12px;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
     }
     nav a:hover {
-      text-decoration: underline;
+      color: #4ce1c6;
+    }
+    h1 {
+      font-size: 2.8em;
+      color: #4ce1c6;
+      margin: 20px 0 10px;
+    }
+    h2 {
+      font-weight: normal;
+      color: #bbb;
+      margin: 5px 0 25px;
     }
     section {
-      padding: 1.5rem;
-      display: none;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 12px;
-      margin: 1rem auto;
-      max-width: 600px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
-    section.active {
-      display: block;
+    .highlight {
+      color: #4ce1c6;
     }
-    button {
-      padding: 0.6rem 1.2rem;
-      margin-top: 1rem;
-      cursor: pointer;
-      background-color: #45a29e;
-      border: none;
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 14px 28px;
+      background: #4ce1c6;
+      color: #0f0f1c;
+      text-decoration: none;
       border-radius: 8px;
-      color: white;
-      font-size: 1.1rem;
-      box-shadow: 0 0 12px rgba(102, 252, 241, 0.3);
-      transition: background 0.3s;
+      font-weight: 600;
+      font-size: 1em;
+      transition: background 0.3s, transform 0.2s;
     }
-    button:hover {
-      background-color: #66fcf1;
-      color: #0b0c10;
+    .btn:hover {
+      background: #3ab8a1;
+      transform: scale(1.05);
     }
-    .token-display {
+    .roadmap p {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+    .timer {
+      font-size: 1.8em;
+      margin-top: 20px;
+      color: #4ce1c6;
+    }
+    .team {
       display: flex;
-      align-items: center;
       justify-content: center;
-      margin-top: 2rem;
-      gap: 1rem;
-      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 20px;
     }
-    .coin-icon {
-      width: 80px;
-      height: 80px;
-      cursor: pointer;
-      animation: spin 3s linear infinite;
-    }
-    @keyframes spin {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
-    }
-    .token-balance {
-      font-size: 1.4rem;
-      font-weight: bold;
-    }
-    .energy-bar {
-      width: 100%;
-      background: #1f2833;
+    .member {
+      background: rgba(255,255,255,0.05);
       border-radius: 10px;
-      overflow: hidden;
-      margin-top: 1rem;
+      padding: 15px;
+      width: 140px;
     }
-    .energy-fill {
-      height: 15px;
-      background: linear-gradient(90deg, #66fcf1, #45a29e);
-      width: 100%;
-      transition: width 0.3s;
+    .member img {
+      width: 80px;
+      border-radius: 50%;
+      margin-bottom: 10px;
     }
-    .league {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: #66fcf1;
-      font-weight: bold;
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #888;
+      background-color: #0a0a14;
     }
-    .roadmap-item {
-      margin-bottom: 1rem;
-    }
-    .roadmap-item strong {
-      color: #66fcf1;
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>NeuroXTon</h1>
-    <nav>
-      <a href="#main" onclick="showTab('main')">🏠 Главная</a>
-      <a href="#wallet" onclick="showTab('wallet')">💼 Wallet</a>
-      <a href="#roadmap" onclick="showTab('roadmap')">🗺️ Дорожная карта</a>
-      <a href="#future" onclick="showTab('future')">🔮 Будущее</a>
-    </nav>
-  </header>
 
-  <!-- Главная -->
-  <section id="main" class="active">
-  
-    <div class="token-display">
-      <div class="league" id="league">Лига: Bronze 🥉</div>
-      <img src="nxt_coin.png" alt="Монета NXT" class="coin-icon" onclick="incrementScore()" />
-      <div class="token-balance">Ваши токены: <span id="tokenBalance">0</span></div>
-      <div class="energy-bar">
-        <div class="energy-fill" id="energyFill"></div>
-      </div>
-    </div>
-  </section>
+<header>
+  <img src="logo.png" alt="NeuroXTON Logo" class="logo">
+  <nav>
+    <a href="#about">About</a>
+    <a href="#realestate">Real Estate</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#team">Team</a>
+  </nav>
+</header>
 
-  <!-- Wallet -->
-  <section id="wallet">
-    <h2>🔐 Подключение к Tonkeeper</h2>
-    <button onclick="connectWallet()">Подключиться к Tonkeeper</button>
-  </section>
+<section id="about">
+  <h1>NeuroXTON</h1>
+  <h2>The first AI + Web3 game with real estate-backed economy</h2>
+  <p>
+    NeuroXTON is more than a game — it’s a fusion of AI, Web3 and real assets.
+    With <span class="highlight">$NXT</span>, holders become part of a real economy: earn, trade, own.
+  </p>
+</section>
 
-  <!-- Дорожная карта -->
-  <section id="roadmap">
-    <h2>🗺️ NEUROXTON ROAD: ПУТЬ К СИЛЕ</h2>
-    <div class="roadmap-item">
-      🔹 <strong>$250K+ — Старт</strong><br>
-      🚀 Запуск игры с Grok AI<br>
-      🎁 Первый AI-дроп<br>
-      📊 Публичный дешборд<br>
-      🎮 Тест-квесты и награды
-    </div>
-    <div class="roadmap-item">
-      🔹 <strong>$500K+ — Активация</strong><br>
-      🔒 Lockdrop с OG-наградами<br>
-      🌱 Альфа-версия AI-стейкинга<br>
-      ⚔️ PvE-сражения с интеллектом<br>
-      🪂 Комьюнити-дроп<br>
-      🎥 Web3-инфлюенсеры
-    </div>
-    <div class="roadmap-item">
-      🔹 <strong>$600K+ — Расширение</strong><br>
-      🧠 AI-сгенерированные миссии<br>
-      🛍 Маркетплейс на TON<br>
-      📈 AI-ассистент для анализа NXT<br>
-      🎮 Умный стейкинг с геймификацией<br>
-      🌍 Интернациональные сообщества<br>
-      🤝 Интеграции с TON-проектами
-    </div>
-    <div class="roadmap-item">
-      🔹 <strong>$750K+ — Ускорение</strong><br>
-      📜 Сюжетный AI-режим “Campaign”<br>
-      🗳 DAO-голосования<br>
-      👤 Прокачка AI-профилей игроков<br>
-      🏆 NFT-дропы редких предметов<br>
-      🏦 Подключение к DeFi-продуктам TON
-    </div>
-    <div class="roadmap-item">
-      🔹 <strong>$1M+ — Раскрытие потенциала</strong><br>
-      🌌 Метавселенная NeuroXTon<br>
-      📲 Мобильное приложение<br>
-      ⚔️ PvP-арены с Grok AI<br>
-      🔄 AI-контракты для трейдинга<br>
-      🧬 Комьюнити-лаборатория: выдвигай — Grok реализует
-    </div>
-  </section>
+<section id="realestate">
+  <h2>🏠 Real estate powered by $NXT</h2>
+  <p>
+    All team revenue will go into buying real-world properties.  
+    After CEX listing, <span class="highlight">$NXT</span> becomes the token for shared ownership.
+    Holders get rights to rental income, sales profits, and exclusive access.
+  </p>
+</section>
 
-  <!-- Будущее -->
-  <section id="future">
-    <h2>🔮 Будущее NeuroXTon</h2>
-    <p>NeuroXTon — это токен нового поколения с поддержкой Grok AI, Web3 и TON.</p>
-    <ul>
-      <li>🧠 AI-дропы и миссии</li>
-      <li>🕹️ PvE и PvP c искусственным интеллектом</li>
-      <li>📈 Умный трейдинг и стейкинг</li>
-      <li>🌌 Метавселенная на базе TON</li>
-      <li>🧩 NFT, DAO, DeFi — всё в одном</li>
-    </ul>
-  </section>
+<section class="roadmap" id="roadmap">
+  <h2>📈 Roadmap</h2>
+  <p>🚀 $250K — Start & Marketing</p>
+  <p>⚙️ $500K — Demo access & Mini App</p>
+  <p>🧠 $1M — Grok AI integration</p>
+  <p>🔥 $10M — Full AI-driven game world</p>
+  <p>🏦 $15M — Listing on CEX</p>
+  <p>🏛️ $20M — Real estate ownership</p>
+</section>
 
-  <script>
-    let tokenBalance = 0;
-    let energy = 100;
+<section>
+  <div class="timer" id="timer">
+    Countdown to CEX listing: calculating...
+  </div>
+</section>
 
-    function incrementScore() {
-      if (energy <= 0) {
-        alert("Энергия на нуле! Подожди восстановления.");
-        return;
-      }
-      tokenBalance++;
-      energy -= 5;
-      if (energy < 0) energy = 0;
-      document.getElementById("tokenBalance").textContent = tokenBalance;
-      document.getElementById("energyFill").style.width = energy + "%";
-      updateLeague();
+<section id="team">
+  <h2>🤝 Meet the team</h2>
+  <div class="team">
+    <div class="member">
+      <img src="avatar1.png" alt="Member 1">
+      <p>Alex</p>
+      <small>Founder & Visionary</small>
+    </div>
+    <div class="member">
+      <img src="avatar2.png" alt="Member 2">
+      <p>Maria</p>
+      <small>Product & Design</small>
+    </div>
+    <div class="member">
+      <img src="avatar3.png" alt="Member 3">
+      <p>John</p>
+      <small>Marketing Lead</small>
+    </div>
+  </div>
+</section>
+
+<section>
+  <a href="#" class="btn">Join Telegram</a>
+  <a href="#" class="btn">Whitepaper</a>
+  <a href="#" class="btn">Play Demo</a>
+</section>
+
+<footer>
+  NeuroXTON © 2025 | Built with AI & Vision
+</footer>
+
+<script>
+  // Countdown timer to target date
+  const targetDate = new Date("2025-12-01T00:00:00Z"); // например, дата листинга
+  const timerElement = document.getElementById("timer");
+  function updateTimer() {
+    const now = new Date();
+    const diff = targetDate - now;
+    if (diff <= 0) {
+      timerElement.textContent = "🎉 Listed on CEX!";
+    } else {
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff/(1000*60*60)) % 24);
+      const minutes = Math.floor((diff/ (1000*60)) % 60);
+      const seconds = Math.floor((diff/1000) % 60);
+      timerElement.textContent = `Countdown to CEX listing: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+</script>
 
-    function updateLeague() {
-      let leagueText = "Лига: ";
-      if (tokenBalance >= 50) {
-        leagueText += "Legendary 🏅";
-      } else if (tokenBalance >= 25) {
-        leagueText += "Diamond 💎";
-      } else if (tokenBalance >= 10) {
-        leagueText += "Gold 🥇";
-      } else if (tokenBalance >= 5) {
-        leagueText += "Silver 🥈";
-      } else {
-        leagueText += "Bronze 🥉";
-      }
-      document.getElementById("league").textContent = leagueText;
-    }
-
-    function connectWallet() {
-      alert("Интеграция с Tonkeeper скоро будет доступна.");
-    }
-
-    function showTab(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
-
-    setInterval(() => {
-      if (energy < 100) {
-        energy += 1;
-        document.getElementById("energyFill").style.width = energy + "%";
-      }
-    }, 1000);
-  </script>
 </body>
 </html>
