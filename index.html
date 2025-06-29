@@ -4,118 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NeuroXTON – AI, Web3 & Real Estate Economy</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0f0f1c;
-      color: #e2e2e2;
-      text-align: center;
-      overflow-x: hidden;
-      background-image: radial-gradient(circle at center, #1a1a2f 0%, #0f0f1c 80%);
-    }
-    header {
-      padding: 20px;
-      background-color: rgba(15,15,28,0.8);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .logo {
-      width: 80px;
-      vertical-align: middle;
-    }
-    nav {
-      display: inline-block;
-      margin-left: 20px;
-    }
-    nav a {
-      color: #e2e2e2;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #4ce1c6;
-    }
-    h1 {
-      font-size: 2.8em;
-      color: #4ce1c6;
-      margin: 20px 0 10px;
-    }
-    h2 {
-      font-weight: normal;
-      color: #bbb;
-      margin: 5px 0 25px;
-    }
-    section {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    .highlight {
-      color: #4ce1c6;
-    }
-    .btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 14px 28px;
-      background: #4ce1c6;
-      color: #0f0f1c;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1em;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .btn:hover {
-      background: #3ab8a1;
-      transform: scale(1.05);
-    }
-    .roadmap p {
-      margin: 10px 0;
-      font-size: 1.1em;
-    }
-    .timer {
-      font-size: 1.8em;
-      margin-top: 20px;
-      color: #4ce1c6;
-    }
-    .team {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .member {
-      background: rgba(255,255,255,0.05);
-      border-radius: 10px;
-      padding: 15px;
-      width: 140px;
-    }
-    .member img {
-      width: 80px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-    footer {
-      margin-top: 60px;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #888;
-      background-color: #0a0a14;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header>
-  <img src="logo.png" alt="NeuroXTON Logo" class="logo">
+  <img src="img/logo.png" alt="NeuroXTON Logo" class="logo">
   <nav>
     <a href="#about">About</a>
     <a href="#realestate">Real Estate</a>
@@ -162,17 +56,17 @@
   <h2>🤝 Meet the team</h2>
   <div class="team">
     <div class="member">
-      <img src="avatar1.png" alt="Member 1">
+      <img src="img/avatar1.png" alt="Member 1">
       <p>Alex</p>
       <small>Founder & Visionary</small>
     </div>
     <div class="member">
-      <img src="avatar2.png" alt="Member 2">
+      <img src="img/avatar2.png" alt="Member 2">
       <p>Maria</p>
       <small>Product & Design</small>
     </div>
     <div class="member">
-      <img src="avatar3.png" alt="Member 3">
+      <img src="img/avatar3.png" alt="Member 3">
       <p>John</p>
       <small>Marketing Lead</small>
     </div>
@@ -189,26 +83,6 @@
   NeuroXTON © 2025 | Built with AI & Vision
 </footer>
 
-<script>
-  // Countdown timer to target date
-  const targetDate = new Date("2025-12-01T00:00:00Z"); // например, дата листинга
-  const timerElement = document.getElementById("timer");
-  function updateTimer() {
-    const now = new Date();
-    const diff = targetDate - now;
-    if (diff <= 0) {
-      timerElement.textContent = "🎉 Listed on CEX!";
-    } else {
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff/(1000*60*60)) % 24);
-      const minutes = Math.floor((diff/ (1000*60)) % 60);
-      const seconds = Math.floor((diff/1000) % 60);
-      timerElement.textContent = `Countdown to CEX listing: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-  }
-  setInterval(updateTimer, 1000);
-  updateTimer();
-</script>
-
+<script src="js/main.js"></script>
 </body>
 </html>
