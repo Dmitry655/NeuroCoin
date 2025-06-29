@@ -1,15 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroXTON – AI, Web3 & Real Estate Economy</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroXTON – AI + Web3 Game</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(160deg, #12141c, #1c2333);
+  color: #e2e2e2;
+  text-align: center;
+  scroll-behavior: smooth;
+}
+
+header {
+  background-color: rgba(10, 14, 20, 0.8);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  width: 80px;
+  vertical-align: middle;
+}
+
+nav {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+nav a {
+  color: #e2e2e2;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #4ce1c6;
+}
+
+section {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+  color: #4ce1c6;
+}
+
+h2 {
+  font-size: 1.8em;
+  color: #ccc;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: #4ce1c6;
+}
+
+.timer {
+  font-size: 1.4em;
+  color: #4ce1c6;
+  margin-top: 20px;
+}
+
+.team {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.member {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 15px;
+  width: 140px;
+}
+
+.member img {
+  width: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 0.9em;
+  color: #888;
+  background-color: #0a0a14;
+}
+</style>
 </head>
 <body>
 
 <header>
-  <img src="img/logo.png" alt="NeuroXTON Logo" class="logo">
+  <img src="https://via.placeholder.com/80x80?text=Logo" alt="NeuroXTON Logo" class="logo">
   <nav>
     <a href="#about">About</a>
     <a href="#realestate">Real Estate</a>
@@ -30,13 +128,13 @@
 <section id="realestate">
   <h2>🏠 Real estate powered by $NXT</h2>
   <p>
-    All team revenue will go into buying real-world properties.  
-    After CEX listing, <span class="highlight">$NXT</span> becomes the token for shared ownership.
+    All team revenue will go into buying real-world properties. After CEX listing,
+    <span class="highlight">$NXT</span> becomes the token for shared ownership.
     Holders get rights to rental income, sales profits, and exclusive access.
   </p>
 </section>
 
-<section class="roadmap" id="roadmap">
+<section id="roadmap">
   <h2>📈 Roadmap</h2>
   <p>🚀 $250K — Start & Marketing</p>
   <p>⚙️ $500K — Demo access & Mini App</p>
@@ -44,45 +142,49 @@
   <p>🔥 $10M — Full AI-driven game world</p>
   <p>🏦 $15M — Listing on CEX</p>
   <p>🏛️ $20M — Real estate ownership</p>
-</section>
-
-<section>
-  <div class="timer" id="timer">
-    Countdown to CEX listing: calculating...
-  </div>
+  <div class="timer" id="timer">Countdown to CEX listing: calculating...</div>
 </section>
 
 <section id="team">
   <h2>🤝 Meet the team</h2>
   <div class="team">
     <div class="member">
-      <img src="img/avatar1.png" alt="Member 1">
-      <p>Alex</p>
-      <small>Founder & Visionary</small>
+      <img src="https://via.placeholder.com/80x80?text=A" alt="Alex">
+      <p>Alex</p><small>Founder & Visionary</small>
     </div>
     <div class="member">
-      <img src="img/avatar2.png" alt="Member 2">
-      <p>Maria</p>
-      <small>Product & Design</small>
+      <img src="https://via.placeholder.com/80x80?text=M" alt="Maria">
+      <p>Maria</p><small>Product & Design</small>
     </div>
     <div class="member">
-      <img src="img/avatar3.png" alt="Member 3">
-      <p>John</p>
-      <small>Marketing Lead</small>
+      <img src="https://via.placeholder.com/80x80?text=J" alt="John">
+      <p>John</p><small>Marketing Lead</small>
     </div>
   </div>
 </section>
 
-<section>
-  <a href="#" class="btn">Join Telegram</a>
-  <a href="#" class="btn">Whitepaper</a>
-  <a href="#" class="btn">Play Demo</a>
-</section>
+<footer>NeuroXTON © 2025 | Built with AI & Vision</footer>
 
-<footer>
-  NeuroXTON © 2025 | Built with AI & Vision
-</footer>
+<script>
+const targetDate = new Date("2025-12-01T00:00:00Z");
+const timerElement = document.getElementById("timer");
 
-<script src="js/main.js"></script>
+function updateTimer() {
+  const now = new Date();
+  const diff = targetDate - now;
+  if (diff <= 0) {
+    timerElement.textContent = "🎉 Listed on CEX!";
+  } else {
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff/(1000*60*60)) % 24);
+    const minutes = Math.floor((diff/ (1000*60)) % 60);
+    const seconds = Math.floor((diff/1000) % 60);
+    timerElement.textContent = `Countdown to CEX listing: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+}
+setInterval(updateTimer, 1000);
+updateTimer();
+</script>
+
 </body>
 </html>
