@@ -1,189 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeuroXTON – AI + Web3 Game</title>
-<style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(160deg, #12141c, #1c2333);
-  color: #e2e2e2;
-  text-align: center;
-  scroll-behavior: smooth;
-}
-
-header {
-  background-color: rgba(10, 14, 20, 0.8);
-  padding: 20px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.logo {
-  width: 80px;
-  vertical-align: middle;
-}
-
-nav {
-  display: inline-block;
-  margin-left: 20px;
-}
-
-nav a {
-  color: #e2e2e2;
-  margin: 0 12px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-nav a:hover {
-  color: #4ce1c6;
-}
-
-section {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-h1 {
-  font-size: 2.5em;
-  color: #4ce1c6;
-}
-
-h2 {
-  font-size: 1.8em;
-  color: #ccc;
-}
-
-p {
-  font-size: 1.1em;
-  line-height: 1.6;
-}
-
-.highlight {
-  color: #4ce1c6;
-}
-
-.timer {
-  font-size: 1.4em;
-  color: #4ce1c6;
-  margin-top: 20px;
-}
-
-.team {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.member {
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-  padding: 15px;
-  width: 140px;
-}
-
-.member img {
-  width: 80px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-footer {
-  margin-top: 40px;
-  padding: 20px;
-  font-size: 0.9em;
-  color: #888;
-  background-color: #0a0a14;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroXTON</title>
+  <style>
+    /* === СТИЛИ ДЛЯ ВСЕГО САЙТА === */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0c0f2c;
+      color: #e0e0e0;
+    }
+    header, footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0,0,0,0.5);
+    }
+    h1, h2, h3 {
+      color: #00baff;
+    }
+    section {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+    }
+    .logo {
+      width: 120px;
+    }
+    .btn {
+      background: #00baff;
+      color: #000;
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+    .roadmap-item {
+      margin: 1rem 0;
+    }
+    /* Анимированный счётчик */
+    .counter {
+      font-size: 2rem;
+      color: #00ffcc;
+    }
+    /* Слайдер для команды */
+    .slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      scroll-behavior: smooth;
+    }
+    .team-member {
+      min-width: 140px;
+      text-align: center;
+    }
+    .team-member img {
+      width: 100px;
+      border-radius: 50%;
+      border: 2px solid #00baff;
+    }
+    /* FAQ */
+    details {
+      margin: 0.5rem 0;
+      background: rgba(0,0,0,0.3);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+    /* Контактная форма */
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin: 0.3rem 0;
+      border: none;
+      border-radius: 6px;
+    }
+    /* Соцсети */
+    .socials a {
+      margin: 0 0.5rem;
+      color: #00baff;
+      text-decoration: none;
+      font-size: 1.5rem;
+    }
+    /* Видео */
+    .video-bg {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 12px;
+      margin: 2rem 0;
+    }
+    .video-bg video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-  <img src="https://via.placeholder.com/80x80?text=Logo" alt="NeuroXTON Logo" class="logo">
-  <nav>
-    <a href="#about">About</a>
-    <a href="#realestate">Real Estate</a>
-    <a href="#roadmap">Roadmap</a>
-    <a href="#team">Team</a>
-  </nav>
+  <img src="images/logo.png" alt="NeuroXTON Logo" class="logo">
+  <h1>NeuroXTON</h1>
+  <p>Where AI meets real assets. $NXT — the token that builds the future.</p>
+  <button class="btn">Buy $NXT</button>
 </header>
 
-<section id="about">
-  <h1>NeuroXTON</h1>
-  <h2>The first AI + Web3 game with real estate-backed economy</h2>
-  <p>
-    NeuroXTON is more than a game — it’s a fusion of AI, Web3 and real assets.
-    With <span class="highlight">$NXT</span>, holders become part of a real economy: earn, trade, own.
-  </p>
+<!-- Видео блок -->
+<div class="video-bg">
+  <video autoplay muted loop>
+    <source src="videos/promo.mp4" type="video/mp4">
+    Your browser does not support video.
+  </video>
+</div>
+
+<section>
+  <h2>About the Project</h2>
+  <p>NeuroXTON combines Web3 gaming, AI integration and real-world real estate. Our mission: make virtual victories turn into real assets, giving holders unique benefits and passive income through property managed by the team.</p>
 </section>
 
-<section id="realestate">
-  <h2>🏠 Real estate powered by $NXT</h2>
-  <p>
-    All team revenue will go into buying real-world properties. After CEX listing,
-    <span class="highlight">$NXT</span> becomes the token for shared ownership.
-    Holders get rights to rental income, sales profits, and exclusive access.
-  </p>
+<section>
+  <h2>Roadmap</h2>
+  <p>Total Capitalization: <span class="counter" id="cap">0</span> $</p>
+  <div class="roadmap-item"><strong>$250K</strong> — Start: Marketing, branding, AI reveal</div>
+  <div class="roadmap-item"><strong>$500K</strong> — Demo: Early access, Mini App, leagues</div>
+  <div class="roadmap-item"><strong>$600K</strong> — Expansion: WebApp, in-game economy</div>
+  <div class="roadmap-item"><strong>$1M</strong> — AI: Grok AI, chat, DEX listing</div>
+  <div class="roadmap-item"><strong>$3M</strong> — Depth: PvP, tournaments, NFTs</div>
+  <div class="roadmap-item"><strong>$10M</strong> — Full AI power</div>
+  <div class="roadmap-item"><strong>$15M</strong> — CEX listing</div>
+  <div class="roadmap-item"><strong>$20M</strong> — Real estate ownership</div>
 </section>
 
-<section id="roadmap">
-  <h2>📈 Roadmap</h2>
-  <p>🚀 $250K — Start & Marketing</p>
-  <p>⚙️ $500K — Demo access & Mini App</p>
-  <p>🧠 $1M — Grok AI integration</p>
-  <p>🔥 $10M — Full AI-driven game world</p>
-  <p>🏦 $15M — Listing on CEX</p>
-  <p>🏛️ $20M — Real estate ownership</p>
-  <div class="timer" id="timer">Countdown to CEX listing: calculating...</div>
-</section>
-
-<section id="team">
-  <h2>🤝 Meet the team</h2>
-  <div class="team">
-    <div class="member">
-      <img src="https://via.placeholder.com/80x80?text=A" alt="Alex">
-      <p>Alex</p><small>Founder & Visionary</small>
+<section>
+  <h2>Meet the Team</h2>
+  <div class="slider">
+    <div class="team-member">
+      <img src="images/founder.jpg" alt="Founder">
+      <div>Founder</div>
     </div>
-    <div class="member">
-      <img src="https://via.placeholder.com/80x80?text=M" alt="Maria">
-      <p>Maria</p><small>Product & Design</small>
+    <div class="team-member">
+      <img src="images/dev.jpg" alt="Developer">
+      <div>Lead Developer</div>
     </div>
-    <div class="member">
-      <img src="https://via.placeholder.com/80x80?text=J" alt="John">
-      <p>John</p><small>Marketing Lead</small>
+    <div class="team-member">
+      <img src="images/marketing.jpg" alt="Marketing">
+      <div>Marketing</div>
     </div>
+    <!-- Добавь ещё участников -->
   </div>
 </section>
 
-<footer>NeuroXTON © 2025 | Built with AI & Vision</footer>
+<section>
+  <h2>FAQ</h2>
+  <details>
+    <summary>Why do we buy real estate?</summary>
+    <p>To back the token with tangible assets and create a stable foundation for growth.</p>
+  </details>
+  <details>
+    <summary>How do holders earn?</summary>
+    <p>Profits from rent and sales are reinvested to grow the project and the token's value.</p>
+  </details>
+  <details>
+    <summary>What makes us unique?</summary>
+    <p>Integration of AI and real assets, creating real economic value for holders.</p>
+  </details>
+</section>
 
+<section>
+  <h2>Contact Us</h2>
+  <form>
+    <input type="text" placeholder="Your name" required>
+    <input type="email" placeholder="Your email" required>
+    <textarea rows="4" placeholder="Your message"></textarea>
+    <button type="submit" class="btn">Send</button>
+  </form>
+</section>
+
+<footer>
+  <div class="socials">
+    <a href="#">Telegram</a>
+    <a href="#">Twitter</a>
+    <a href="#">Discord</a>
+  </div>
+  <p>© 2025 NeuroXTON | All rights reserved</p>
+</footer>
+
+<!-- === СКРИПТЫ === -->
 <script>
-const targetDate = new Date("2025-12-01T00:00:00Z");
-const timerElement = document.getElementById("timer");
-
-function updateTimer() {
-  const now = new Date();
-  const diff = targetDate - now;
-  if (diff <= 0) {
-    timerElement.textContent = "🎉 Listed on CEX!";
-  } else {
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff/(1000*60*60)) % 24);
-    const minutes = Math.floor((diff/ (1000*60)) % 60);
-    const seconds = Math.floor((diff/1000) % 60);
-    timerElement.textContent = `Countdown to CEX listing: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }
-}
-setInterval(updateTimer, 1000);
-updateTimer();
+  // Анимированный счётчик
+  let cap = document.getElementById('cap');
+  let target = 250000; // например, 250к
+  let count = 0;
+  let speed = 10; 
+  let interval = setInterval(() => {
+    if (count < target) {
+      count += 5000; 
+      cap.innerText = count.toLocaleString();
+    } else {
+      clearInterval(interval);
+    }
+  }, speed);
 </script>
 
 </body>
